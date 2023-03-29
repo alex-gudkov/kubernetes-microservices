@@ -29,16 +29,12 @@ import { SessionsService } from './sessions.service';
         SessionsService,
         {
             provide: 'USERS_SERVICE',
-            useFactory: () => {
-                const clientTcpOptions: TcpClientOptions = {
-                    transport: Transport.TCP,
-                    options: {
-                        port: 5002,
-                    },
-                };
-
-                return ClientProxyFactory.create(clientTcpOptions);
-            },
+            useValue: ClientProxyFactory.create({
+                transport: Transport.TCP,
+                options: {
+                    port: 5002,
+                },
+            }),
         },
     ],
     exports: [],

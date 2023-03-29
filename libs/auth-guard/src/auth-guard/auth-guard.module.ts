@@ -17,16 +17,12 @@ import { ClientsModule, Transport, TcpClientOptions, ClientProxyFactory } from '
     providers: [
         {
             provide: 'AUTH_SERVICE',
-            useFactory: () => {
-                const clientTcpOptions: TcpClientOptions = {
-                    transport: Transport.TCP,
-                    options: {
-                        port: 5001,
-                    },
-                };
-
-                return ClientProxyFactory.create(clientTcpOptions);
-            },
+            useValue: ClientProxyFactory.create({
+                transport: Transport.TCP,
+                options: {
+                    port: 5001,
+                },
+            }),
         },
     ],
     exports: [],
