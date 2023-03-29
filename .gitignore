@@ -19,3 +19,5 @@
 /*.env
 
 # docker volumes
+/pg_data
+/redis_data
