@@ -1,12 +1,43 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
+import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { UsersEntity } from './interfaces/users-entity';
 
 @Injectable()
 export class AuthService {
-    constructor(private jwtService: JwtService) {}
+    constructor(
+        private readonly jwtService: JwtService,
+        @Inject('USERS_SERVICE') private readonly usersServiceClient: ClientProxy,
+    ) {}
+
+    public async signUpUser(signUpUserDto: SignUpUserDto) {
+        const isUserExistByLoginPattern = 'IS_USER_EXIST_BY_LOGIN';
+        const isUserExistByLoginPayload = {
+            userLogin: signUpUserDto.login,
+        };
+        const isUserExistByLogin = await firstValueFrom(
+            this.usersServiceClient.send<Promise<boolean>>(isUserExistByLoginPattern, isUserExistByLoginPayload),
+        );
+
+        if (isUserExistByLogin) {
+            throw new BadRequestException('User already exist.');
+        }
+
+        const createUserPattern = 'CREATE_USER';
+        const createUserPayload = {
+            userLogin: signUpUserDto.login,
+            userPassword: signUpUserDto.password,
+        };
+        const user = await firstValueFrom(
+            this.usersServiceClient.send<Promise<UsersEntity>>(createUserPattern, createUserPayload),
+        );
+
+        return user;
+    }
 
     public signAccessToken(user: UsersEntity): Promise<string> {
         if (!user) {

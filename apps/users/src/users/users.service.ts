@@ -11,7 +11,8 @@ export class UsersService {
 
     public createUser(createUserDto: CreateUserDto): Promise<UsersEntity> {
         const user = this.usersRepository.create({
-            ...createUserDto,
+            login: createUserDto.login,
+            password: createUserDto.password,
         });
 
         return this.usersRepository.save(user);
@@ -25,6 +26,14 @@ export class UsersService {
         return this.usersRepository.findOne({
             where: {
                 id: userId,
+            },
+        });
+    }
+
+    public isUserExistByLogin(userLogin: string): Promise<boolean> {
+        return this.usersRepository.exist({
+            where: {
+                login: userLogin,
             },
         });
     }
