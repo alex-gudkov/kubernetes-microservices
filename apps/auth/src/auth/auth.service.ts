@@ -1,16 +1,17 @@
-import { BadRequestException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { InjectRedis, Redis } from '@nestjs-modules/ioredis';
 import { firstValueFrom } from 'rxjs';
+import * as uuid from 'uuid';
 
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { SessionsEntity } from './interfaces/sessions-entity';
 import { UsersEntity } from './interfaces/users-entity';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private readonly jwtService: JwtService,
+        @InjectRedis() private readonly redisRepository: Redis,
         @Inject('USERS_SERVICE') private readonly usersServiceClient: ClientProxy,
     ) {}
 
@@ -39,25 +40,27 @@ export class AuthService {
         return user;
     }
 
-    public signAccessToken(user: UsersEntity): Promise<string> {
-        if (!user) {
-            throw new NotFoundException('User not found.');
-        }
-
-        const payload: JwtPayload = {
+    public async createSession(user: UsersEntity): Promise<SessionsEntity> {
+        const userSession: SessionsEntity = {
+            id: uuid.v4(),
             userId: user.id,
         };
+        const sessionsEntityString = JSON.stringify(userSession);
 
-        return this.jwtService.signAsync(payload);
+        await this.redisRepository.set(userSession.id, sessionsEntityString, 'EX', 7 * 24 * 60 * 60); // seconds = 7d * 24h * 60m * 60s
+
+        return userSession;
     }
 
-    public async verifyAccessToken(accessToken: string): Promise<number> {
-        try {
-            const payload = await this.jwtService.verifyAsync<JwtPayload>(accessToken);
+    public async findSessionById(sessionId: string): Promise<SessionsEntity> {
+        const sessionsEntityString = await this.redisRepository.get(sessionId);
 
-            return payload.userId;
-        } catch (error) {
-            throw new UnauthorizedException('Invalid access token.');
+        if (!sessionsEntityString) {
+            throw new NotFoundException('Session not found.');
         }
+
+        const userSession: SessionsEntity = JSON.parse(sessionsEntityString);
+
+        return userSession;
     }
 }

@@ -15,9 +15,9 @@ export class AuthHttpController {
         @Res({ passthrough: true }) response: Response,
     ): Promise<UsersEntity> {
         const user = await this.authService.signUpUser(signUpUserDto);
-        const accessToken = await this.authService.signAccessToken(user);
+        const session = await this.authService.createSession(user);
 
-        response.cookie('ACCESS_TOKEN', accessToken, {
+        response.cookie('SESSION_ID', session.id, {
             httpOnly: true,
         });
 

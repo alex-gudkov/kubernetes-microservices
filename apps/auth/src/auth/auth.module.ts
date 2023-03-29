@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { ClientProxyFactory, ClientsModule, TcpClientOptions, Transport } from '@nestjs/microservices';
+import { RedisModule } from '@nestjs-modules/ioredis';
 
 import { AuthHttpController } from './auth.http.controller';
 import { AuthService } from './auth.service';
 
 @Module({
     imports: [
-        JwtModule.register({
-            secret: '1234567890',
+        RedisModule.forRoot({
+            config: {
+                url: 'redis://localhost:6379',
+            },
         }),
         ClientsModule.register([
             {
