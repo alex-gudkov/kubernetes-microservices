@@ -6,7 +6,7 @@
     "private": true,
     "license": "UNLICENSED",
     "scripts": {
-        "prebuild": "rimraf dist",
+        "prebuild": "rimraf ./dist",
         "build": "nest build",
         "start:dev": "nest start --watch",
         "eslint:fix": "eslint --fix ./src/**/*.ts --config ./.eslintrc",

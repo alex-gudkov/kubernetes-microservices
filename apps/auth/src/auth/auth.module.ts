@@ -4,6 +4,7 @@ import { RedisModule } from '@nestjs-modules/ioredis';
 
 import { AuthHttpController } from './auth.http.controller';
 import { AuthService } from './auth.service';
+import { SessionsService } from './sessions.service';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import { AuthService } from './auth.service';
     controllers: [AuthHttpController],
     providers: [
         AuthService,
+        SessionsService,
         {
             provide: 'USERS_SERVICE',
             useFactory: () => {
