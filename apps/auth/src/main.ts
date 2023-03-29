@@ -6,16 +6,15 @@ import { AuthModule } from './auth.module';
 
 async function bootstrap() {
     const app = await NestFactory.create<INestApplication>(AuthModule);
-    const port = 3001;
     const microservice = app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.TCP,
         options: {
-            port,
+            port: 5001,
         },
     });
 
     await app.startAllMicroservices();
-    await app.listen(port);
+    await app.listen(3001);
 }
 
 bootstrap();
