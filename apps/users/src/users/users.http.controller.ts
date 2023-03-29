@@ -17,9 +17,4 @@ export class UsersHttpController {
     public findAllUsers(): Promise<UsersEntity[]> {
         return this.usersService.findAllUsers();
     }
-
-    @Get('/:userId')
-    public findUser(@Param('userId') userId: number): Promise<UsersEntity | null> {
-        return this.usersService.findUser(userId);
-    }
 }

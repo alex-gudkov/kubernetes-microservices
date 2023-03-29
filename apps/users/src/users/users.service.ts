@@ -22,10 +22,18 @@ export class UsersService {
         return this.usersRepository.find({});
     }
 
-    public findUser(userId: number): Promise<UsersEntity | null> {
+    public findUserById(userId: number): Promise<UsersEntity | null> {
         return this.usersRepository.findOne({
             where: {
                 id: userId,
+            },
+        });
+    }
+
+    public findUserByLogin(userLogin: string): Promise<UsersEntity | null> {
+        return this.usersRepository.findOne({
+            where: {
+                login: userLogin,
             },
         });
     }

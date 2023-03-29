@@ -20,12 +20,12 @@ export class UsersTcpController {
     }
 
     @MessagePattern('FIND_USER_BY_ID')
-    public findUser(@Payload() { userId }): Promise<UsersEntity | null> {
-        return this.usersService.findUser(userId);
+    public findUserById(@Payload() { userId }): Promise<UsersEntity | null> {
+        return this.usersService.findUserById(userId);
     }
 
-    @MessagePattern('IS_USER_EXIST_BY_LOGIN')
-    public isUserExistByLogin(@Payload() { userLogin }): Promise<boolean> {
-        return this.usersService.isUserExistByLogin(userLogin);
+    @MessagePattern('FIND_USER_BY_LOGIN')
+    public findUserByLogin(@Payload() { userLogin }): Promise<UsersEntity | null> {
+        return this.usersService.findUserByLogin(userLogin);
     }
 }

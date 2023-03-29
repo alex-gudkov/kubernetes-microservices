@@ -1,6 +1,5 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { InjectRedis, Redis } from '@nestjs-modules/ioredis';
 import { firstValueFrom } from 'rxjs';
 
 import { SignInUserDto } from './dto/sign-in-user.dto';
@@ -12,15 +11,15 @@ export class AuthService {
     constructor(@Inject('USERS_SERVICE') private readonly usersServiceClient: ClientProxy) {}
 
     public async signUpUser(signUpUserDto: SignUpUserDto) {
-        const isUserExistByLoginPattern = 'IS_USER_EXIST_BY_LOGIN';
-        const isUserExistByLoginPayload = {
+        const findUserByLoginPattern = 'FIND_USER_BY_LOGIN';
+        const findUserByLoginPayload = {
             userLogin: signUpUserDto.login,
         };
-        const isUserExistByLogin = await firstValueFrom(
-            this.usersServiceClient.send<Promise<boolean>>(isUserExistByLoginPattern, isUserExistByLoginPayload),
+        const candidateUser = await firstValueFrom(
+            this.usersServiceClient.send<Promise<UsersEntity>>(findUserByLoginPattern, findUserByLoginPayload),
         );
 
-        if (isUserExistByLogin) {
+        if (candidateUser) {
             throw new BadRequestException('User already exist.');
         }
 
