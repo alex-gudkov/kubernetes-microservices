@@ -1,5 +1,5 @@
 {
-    "name": "nestjs-boilerplate",
+    "name": "kubernetes-microservices",
     "version": "1.0.0",
     "description": "",
     "author": "alex-gudkov",
@@ -8,10 +8,7 @@
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "nest build",
-        "start": "nest start",
         "start:dev": "nest start --watch",
-        "start:debug": "nest start --debug --watch",
-        "start:prod": "node dist/main",
         "eslint:fix": "eslint --fix ./src/**/*.ts --config ./.eslintrc",
         "prettier:write": "prettier --write ./src/**/*.ts --config ./.prettierrc"
     },
