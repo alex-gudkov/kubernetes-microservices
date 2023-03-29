@@ -6,17 +6,26 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
-        "target": "es2017",
+        "target": "ES2017",
         "sourceMap": true,
         "outDir": "./dist",
         "baseUrl": "./",
         "incremental": true,
         "skipLibCheck": true,
-        "strictNullChecks": true,
         "noImplicitAny": false,
-        "strictBindCallApply": false,
-        "forceConsistentCasingInFileNames": false,
-        "noFallthroughCasesInSwitch": false,
-        "paths": {}
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "strictNullChecks": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": false,
+        "paths": {
+            "@libs/auth-guard": [
+                "./libs/auth-guard/src"
+            ],
+            "@libs/auth-guard/*": [
+                "./libs/auth-guard/src/*"
+            ],
+        }
     }
 }

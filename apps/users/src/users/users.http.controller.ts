@@ -8,7 +8,7 @@ export class UsersHttpController {
     constructor(private readonly usersService: UsersService) {}
 
     @Get('/')
-    public findAllUsers(): Promise<UsersEntity[]> {
+    public findAllUsers(): Promise<UsersEntity[]> | void {
         return this.usersService.findAllUsers();
     }
 }

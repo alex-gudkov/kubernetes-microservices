@@ -2,7 +2,19 @@
     "$schema": "https://json.schemastore.org/nest-cli",
     "collection": "@nestjs/schematics",
     "monorepo": true,
+    "compilerOptions": {
+        "webpack": false
+    },
     "projects": {
+        "auth-guard": {
+            "type": "library",
+            "root": "./libs/auth-guard",
+            "entryFile": "index",
+            "sourceRoot": "./libs/auth-guard/src",
+            "compilerOptions": {
+                "tsConfigPath": "./libs/auth-guard/tsconfig.lib.json"
+            }
+        },
         "wallet": {
             "type": "application",
             "root": "./apps/wallet",
