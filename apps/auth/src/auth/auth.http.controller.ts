@@ -1,9 +1,10 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 
 import { AuthService } from './auth.service';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
+import { SessionsEntity } from './interfaces/sessions-entity';
 import { UsersEntity } from './interfaces/users-entity';
 import { SessionsService } from './sessions.service';
 
@@ -39,5 +40,10 @@ export class AuthHttpController {
         });
 
         return user;
+    }
+
+    @Get('/sessions/:sessionId')
+    public findSessionById(@Param('sessionId') sessionId: string): Promise<SessionsEntity | null> {
+        return this.sessionsService.findSessionById(sessionId);
     }
 }
