@@ -2,6 +2,7 @@ import { Body, Controller, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 
 import { AuthService } from './auth.service';
+import { SignInUserDto } from './dto/sign-in-user.dto';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { UsersEntity } from './interfaces/users-entity';
 
@@ -15,6 +16,21 @@ export class AuthHttpController {
         @Res({ passthrough: true }) response: Response,
     ): Promise<UsersEntity> {
         const user = await this.authService.signUpUser(signUpUserDto);
+        const session = await this.authService.createSession(user);
+
+        response.cookie('SESSION_ID', session.id, {
+            httpOnly: true,
+        });
+
+        return user;
+    }
+
+    @Post('/sign-in')
+    public async signInUser(
+        @Body() signInUserDto: SignInUserDto,
+        @Res({ passthrough: true }) response: Response,
+    ): Promise<UsersEntity> {
+        const user = await this.authService.signInUser(signInUserDto);
         const session = await this.authService.createSession(user);
 
         response.cookie('SESSION_ID', session.id, {

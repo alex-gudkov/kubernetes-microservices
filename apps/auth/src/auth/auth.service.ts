@@ -4,6 +4,7 @@ import { InjectRedis, Redis } from '@nestjs-modules/ioredis';
 import { firstValueFrom } from 'rxjs';
 import * as uuid from 'uuid';
 
+import { SignInUserDto } from './dto/sign-in-user.dto';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
 import { SessionsEntity } from './interfaces/sessions-entity';
 import { UsersEntity } from './interfaces/users-entity';
@@ -40,14 +41,29 @@ export class AuthService {
         return user;
     }
 
+    public async signInUser(signInUserDto: SignInUserDto): Promise<UsersEntity> {
+        const pattern = 'FIND_USER_BY_LOGIN';
+        const payload = {
+            userLogin: signInUserDto.login,
+        };
+        const user = await firstValueFrom(this.usersServiceClient.send<Promise<UsersEntity>>(pattern, payload));
+
+        if (!user) {
+            throw new BadRequestException('User not registered.');
+        }
+
+        return user;
+    }
+
     public async createSession(user: UsersEntity): Promise<SessionsEntity> {
         const userSession: SessionsEntity = {
             id: uuid.v4(),
             userId: user.id,
         };
         const sessionsEntityString = JSON.stringify(userSession);
+        const sessionTtlInSeconds = 7 * 24 * 60 * 60;
 
-        await this.redisRepository.set(userSession.id, sessionsEntityString, 'EX', 7 * 24 * 60 * 60); // seconds = 7d * 24h * 60m * 60s
+        await this.redisRepository.set(userSession.id, sessionsEntityString, 'EX', sessionTtlInSeconds);
 
         return userSession;
     }
