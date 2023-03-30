@@ -6,13 +6,13 @@
         "webpack": false
     },
     "projects": {
-        "auth-guard": {
+        "auth-utils": {
             "type": "library",
-            "root": "./libs/auth-guard",
+            "root": "./libs/auth-utils",
             "entryFile": "index",
-            "sourceRoot": "./libs/auth-guard/src",
+            "sourceRoot": "./libs/auth-utils/src",
             "compilerOptions": {
-                "tsConfigPath": "./libs/auth-guard/tsconfig.lib.json"
+                "tsConfigPath": "./libs/auth-utils/tsconfig.lib.json"
             }
         },
         "wallets": {

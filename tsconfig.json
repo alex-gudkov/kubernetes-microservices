@@ -20,11 +20,11 @@
         "strictBindCallApply": true,
         "strictPropertyInitialization": false,
         "paths": {
-            "@libs/auth-guard": [
-                "./libs/auth-guard/src"
+            "@libs/auth-utils": [
+                "libs/auth-utils/src"
             ],
-            "@libs/auth-guard/*": [
-                "./libs/auth-guard/src/*"
+            "@libs/auth-utils/*": [
+                "libs/auth-utils/src/*"
             ],
         }
     }

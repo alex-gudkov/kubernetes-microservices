@@ -37,4 +37,4 @@ import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservi
         },
     ],
 })
-export class AuthGuardModule {}
+export class AuthUtilsModule {}

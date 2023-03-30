@@ -1,4 +1,3 @@
-import { AuthGuardModule } from '@libs/auth-guard';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -8,7 +7,7 @@ import { UsersService } from './users.service';
 import { UsersTcpController } from './users.tcp.controller';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UsersEntity]), AuthGuardModule],
+    imports: [TypeOrmModule.forFeature([UsersEntity])],
     controllers: [UsersHttpController, UsersTcpController],
     providers: [UsersService],
     exports: [],

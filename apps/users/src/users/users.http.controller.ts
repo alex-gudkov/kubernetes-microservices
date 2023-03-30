@@ -1,5 +1,5 @@
-import { AuthGuard } from '@libs/auth-guard';
 import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'libs/auth-utils/src';
 
 import { UsersEntity } from './entities/users.entity';
 import { UsersService } from './users.service';

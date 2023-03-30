@@ -1,20 +1,20 @@
-import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Request } from 'express';
+import { Response, NextFunction } from 'express';
 import { firstValueFrom } from 'rxjs';
 
+import { RequestWithCurrentUserId } from './request-with-current-user-id.interface';
 import { SessionsEntity } from './sessions-entity';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthMiddleware implements NestMiddleware {
     constructor(@Inject('AUTH_SERVICE') private readonly authServiceClient: ClientProxy) {}
 
-    public async canActivate(context: ExecutionContext): Promise<boolean> {
-        const request = context.switchToHttp().getRequest<Request>();
+    public async use(request: RequestWithCurrentUserId, response: Response, next: NextFunction): Promise<void> {
         const sessionId = request.cookies['SESSION_ID'];
 
         if (!sessionId) {
-            return false;
+            throw new UnauthorizedException('No SESSION_ID in cookies.');
         }
 
         const pattern = 'FIND_SESSION_BY_ID';
@@ -25,10 +25,12 @@ export class AuthGuard implements CanActivate {
             this.authServiceClient.send<Promise<SessionsEntity | null>>(pattern, payload),
         );
 
-        if (!session) {
-            return false;
+        if (session) {
+            request.currentUserId = session.userId;
+        } else {
+            request.currentUserId = null;
         }
 
-        return true;
+        next();
     }
 }

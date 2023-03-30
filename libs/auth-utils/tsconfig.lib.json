@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "declaration": false,
-        "outDir": "../../dist/libs/auth-guard"
+        "outDir": "../../dist/libs/auth-utils"
     },
     "include": [
         "./src/**/*"
