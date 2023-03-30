@@ -1,28 +1,33 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { AuthGuard, CurrentUserIdDecorator } from '@libs/auth-utils';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 
 import { CreateWalletDto } from './dto/create-wallet.dto';
+import { WalletsEntity } from './entities/wallets.entity';
 import { WalletsService } from './wallets.service';
 
 @Controller('/wallets')
+@UseGuards(AuthGuard)
 export class WalletsController {
     constructor(private readonly walletsService: WalletsService) {}
 
     @Post('/')
-    public async createWallet(@Body() createWalletDto: CreateWalletDto, @Req() request: Request) {
-        const currentSession = await this.walletsService.findCurrentSessionOrThrow(request);
-        const currentUserId = currentSession.userId;
-
+    public createWallet(
+        @Body() createWalletDto: CreateWalletDto,
+        @CurrentUserIdDecorator() currentUserId: number,
+    ): Promise<WalletsEntity> {
         return this.walletsService.createWallet(createWalletDto, currentUserId);
     }
 
     @Get('/')
-    public findWallets() {
+    public findWallets(): Promise<WalletsEntity[]> {
         return this.walletsService.findWallets();
     }
 
     @Patch('/:walletId')
-    public putMoneyOnWallet(@Param('walletId', ParseIntPipe) walletId: number, @Body() { moneyAmount }) {
+    public putMoneyOnWallet(
+        @Param('walletId', ParseIntPipe) walletId: number,
+        @Body() { moneyAmount },
+    ): Promise<WalletsEntity> {
         return this.walletsService.putMoneyOnWallet(walletId, moneyAmount);
     }
 }

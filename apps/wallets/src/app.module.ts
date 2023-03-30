@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { AuthMiddleware, AuthUtilsModule } from '@libs/auth-utils';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+import { WalletsController } from './wallets/wallets.controller';
 import { WalletModule } from './wallets/wallets.module';
 
 @Module({
@@ -20,9 +22,14 @@ import { WalletModule } from './wallets/wallets.module';
             },
         }),
         WalletModule,
+        AuthUtilsModule,
     ],
     controllers: [],
     providers: [],
     exports: [],
 })
-export class AppModule {}
+export class AppModule {
+    public configure(consumer: MiddlewareConsumer): void {
+        consumer.apply(AuthMiddleware).forRoutes(WalletsController);
+    }
+}
