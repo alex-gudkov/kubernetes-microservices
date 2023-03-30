@@ -1,5 +1,5 @@
 {
-    "name": "kubernetes-microservices",
+    "name": "kubernetes-microservices-auth",
     "version": "1.0.0",
     "description": "",
     "author": "alex-gudkov",
@@ -9,11 +9,12 @@
         "prebuild": "rimraf ./dist",
         "build": "nest build",
         "start:dev": "nest start --watch",
+        "start:debug": "nest start --debug --watch",
+        "start:prod": "node ./dist/main.js",
         "eslint:fix": "eslint --fix ./src/**/*.ts --config ./.eslintrc",
         "prettier:write": "prettier --write ./src/**/*.ts --config ./.prettierrc"
     },
     "dependencies": {
-        "@nestjs-modules/ioredis": "^1.0.1",
         "@nestjs/common": "^9.0.0",
         "@nestjs/core": "^9.0.0",
         "@nestjs/microservices": "^9.3.12",
