@@ -1,6 +1,7 @@
 import { AuthUtilsModule } from '@libs/auth-utils';
 import { Module } from '@nestjs/common';
-import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigService } from '@nestjs/config';
+import { ClientProxyFactory, RmqOptions, Transport } from '@nestjs/microservices';
 import { RedisModule } from '@nestjs-modules/ioredis';
 
 import { AuthHttpController } from './auth.http.controller';
@@ -15,19 +16,6 @@ import { SessionsTcpController } from './sessions.tcp.controller';
                 url: 'redis://localhost:6379',
             },
         }),
-        ClientsModule.register([
-            {
-                name: 'USERS_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'USERS',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            },
-        ]),
     ],
     controllers: [AuthHttpController, SessionsTcpController],
     providers: [
@@ -35,16 +23,21 @@ import { SessionsTcpController } from './sessions.tcp.controller';
         SessionsService,
         {
             provide: 'USERS_SERVICE',
-            useValue: ClientProxyFactory.create({
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'USERS',
-                    queueOptions: {
-                        durable: false,
+            useFactory: (configService: ConfigService) => {
+                const clientRmqOptions: RmqOptions = {
+                    transport: Transport.RMQ,
+                    options: {
+                        urls: [configService.getOrThrow<string>('RABBITMQ_USERS_URL')],
+                        queue: configService.getOrThrow<string>('RABBITMQ_USERS_QUEUE'),
+                        queueOptions: {
+                            durable: false,
+                        },
                     },
-                },
-            }),
+                };
+
+                return ClientProxyFactory.create(clientRmqOptions);
+            },
+            inject: [ConfigService],
         },
         AuthUtilsModule,
     ],
