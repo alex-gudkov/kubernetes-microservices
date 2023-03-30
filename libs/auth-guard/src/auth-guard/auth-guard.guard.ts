@@ -21,7 +21,9 @@ export class AuthGuard implements CanActivate {
         const payload = {
             sessionId,
         };
-        const session = await firstValueFrom(this.authServiceClient.send<Promise<SessionsEntity>>(pattern, payload));
+        const session = await firstValueFrom(
+            this.authServiceClient.send<Promise<SessionsEntity | null>>(pattern, payload),
+        );
 
         if (!session) {
             return false;

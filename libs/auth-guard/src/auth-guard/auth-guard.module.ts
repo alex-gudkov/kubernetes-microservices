@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport, TcpClientOptions, ClientProxyFactory } from '@nestjs/microservices';
+import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservices';
 
 @Module({
     imports: [
