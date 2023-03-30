@@ -1,52 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservices';
+
+import { authServiceProvider } from '../configs/auth-service.provider';
 
 @Module({
-    imports: [
-        ClientsModule.register([
-            {
-                name: 'AUTH_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'AUTH',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            },
-        ]),
-    ],
+    imports: [],
     controllers: [],
-    providers: [
-        {
-            provide: 'AUTH_SERVICE',
-            useValue: ClientProxyFactory.create({
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'AUTH',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            }),
-        },
-    ],
-    exports: [
-        {
-            provide: 'AUTH_SERVICE',
-            useValue: ClientProxyFactory.create({
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'AUTH',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            }),
-        },
-    ],
+    providers: [authServiceProvider],
+    exports: [authServiceProvider],
 })
 export class AuthUtilsModule {}

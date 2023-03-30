@@ -8,7 +8,7 @@ import { SessionsEntity } from './interfaces/sessions-entity.interface';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-    constructor(@Inject('AUTH_SERVICE') private readonly authServiceClient: ClientProxy) {}
+    constructor(@Inject('AUTH_SERVICE') private readonly authServiceProxyClient: ClientProxy) {}
 
     public async use(request: RequestWithCurrentUserId, response: Response, next: NextFunction): Promise<void> {
         const sessionId = request.cookies['SESSION_ID'];
@@ -22,7 +22,7 @@ export class AuthMiddleware implements NestMiddleware {
             sessionId,
         };
         const session = await firstValueFrom(
-            this.authServiceClient.send<Promise<SessionsEntity | null>>(pattern, payload),
+            this.authServiceProxyClient.send<Promise<SessionsEntity | null>>(pattern, payload),
         );
 
         if (session) {
