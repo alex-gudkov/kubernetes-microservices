@@ -2,8 +2,8 @@ import { AuthMiddleware, AuthUtilsModule } from '@libs/auth-utils';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import { WalletModule } from './wallets/wallets.module';
 import { WalletsHttpController } from './wallets/wallets.http.controller';
+import { WalletModule } from './wallets/wallets.module';
 
 @Module({
     imports: [

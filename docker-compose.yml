@@ -23,7 +23,7 @@ services:
             POSTGRES_PASSWORD: root
             POSTGRES_DB: kubernetes_microservices
         volumes:
-            - ./pg_data:/var/lib/postgresql\
+            - ./pg_data:/var/lib/postgresql
     rabbitmq:
         container_name: kubernetes_microservices_rabbitmq
         image: rabbitmq:3

@@ -1,5 +1,5 @@
 {
-    "name": "kubernetes-microservices-auth",
+    "name": "kubernetes-microservices-users",
     "version": "1.0.0",
     "description": "",
     "author": "alex-gudkov",
@@ -11,8 +11,8 @@
         "start:dev": "nest start --watch",
         "start:debug": "nest start --debug --watch",
         "start:prod": "node ./dist/main.js",
-        "eslint:fix": "eslint --fix ./src/**/*.ts --config ./.eslintrc",
-        "prettier:write": "prettier --write ./src/**/*.ts --config ./.prettierrc"
+        "eslint:fix": "eslint --fix ./src/**/*.ts ./libs/**/*.ts --config ./.eslintrc",
+        "prettier:write": "prettier --write ./src/**/*.ts ./libs/**/*.ts --config ./.prettierrc"
     },
     "dependencies": {
         "@nestjs/common": "^9.0.0",
