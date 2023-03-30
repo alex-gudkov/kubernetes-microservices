@@ -1,4 +1,3 @@
-import { AuthUtilsModule } from '@libs/auth-utils';
 import { Module } from '@nestjs/common';
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { RedisConfigService } from 'src/configs/redis.config.service';
@@ -12,7 +11,7 @@ import { SessionsTcpController } from './sessions.tcp.controller';
 @Module({
     imports: [RedisModule.forRootAsync({ useClass: RedisConfigService })],
     controllers: [AuthHttpController, SessionsTcpController],
-    providers: [AuthService, SessionsService, usersServiceProvider, AuthUtilsModule],
+    providers: [AuthService, SessionsService, usersServiceProvider],
     exports: [],
 })
 export class AuthModule {}
