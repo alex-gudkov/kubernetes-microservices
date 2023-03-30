@@ -1,8 +1,8 @@
 import { AuthUtilsModule } from '@libs/auth-utils';
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, RmqOptions, Transport } from '@nestjs/microservices';
-import { RedisModule } from '@nestjs-modules/ioredis';
+import { RedisModule, RedisModuleOptions } from '@nestjs-modules/ioredis';
 
 import { AuthHttpController } from './auth.http.controller';
 import { AuthService } from './auth.service';
@@ -11,10 +11,16 @@ import { SessionsTcpController } from './sessions.tcp.controller';
 
 @Module({
     imports: [
-        RedisModule.forRoot({
-            config: {
-                url: 'redis://localhost:6379',
+        RedisModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => {
+                return {
+                    config: {
+                        url: configService.getOrThrow<string>('REDIS_URL'),
+                    },
+                } as RedisModuleOptions;
             },
+            inject: [ConfigService],
         }),
     ],
     controllers: [AuthHttpController, SessionsTcpController],
