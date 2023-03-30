@@ -4,8 +4,8 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { SessionsEntity } from './interfaces/sessions-entity';
 import { SessionsService } from './sessions.service';
 
-@Controller('/auth')
-export class AuthHttpController {
+@Controller()
+export class AuthTcpController {
     constructor(private readonly sessionsService: SessionsService) {}
 
     @MessagePattern('FIND_SESSION_BY_ID')

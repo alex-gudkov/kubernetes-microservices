@@ -15,13 +15,13 @@
                 "tsConfigPath": "./libs/auth-guard/tsconfig.lib.json"
             }
         },
-        "wallet": {
+        "wallets": {
             "type": "application",
-            "root": "./apps/wallet",
+            "root": "./apps/wallets",
             "entryFile": "main.js",
-            "sourceRoot": "./apps/wallet/src",
+            "sourceRoot": "./apps/wallets/src",
             "compilerOptions": {
-                "tsConfigPath": "./apps/wallet/tsconfig.app.json"
+                "tsConfigPath": "./apps/wallets/tsconfig.app.json"
             }
         },
         "users": {
