@@ -1,8 +1,9 @@
 import { AuthMiddleware, AuthUtilsModule } from '@libs/auth-utils';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { TypeOrmConfigService } from './configs/typeorm.config.service';
 import { UsersHttpController } from './users/users.http.controller';
 import { UsersModule } from './users/users.module';
 
@@ -12,22 +13,7 @@ import { UsersModule } from './users/users.module';
             envFilePath: './.env',
             isGlobal: true,
         }),
-        TypeOrmModule.forRootAsync({
-            imports: [ConfigModule],
-            useFactory: (configService: ConfigService) => {
-                return {
-                    type: 'postgres',
-                    host: configService.getOrThrow<string>('POSTGRES_HOST'),
-                    port: parseInt(configService.getOrThrow<string>('POSTGRES_PORT'), 10),
-                    username: configService.getOrThrow<string>('POSTGRES_USER'),
-                    password: configService.getOrThrow<string>('POSTGRES_PASSWORD'),
-                    database: configService.getOrThrow<string>('POSTGRES_DB'),
-                    autoLoadEntities: true,
-                    synchronize: true,
-                } as TypeOrmModuleOptions;
-            },
-            inject: [ConfigService],
-        }),
+        TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
         UsersModule,
         AuthUtilsModule,
     ],
