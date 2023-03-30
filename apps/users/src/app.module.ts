@@ -22,7 +22,7 @@ import { UsersModule } from './users/users.module';
     exports: [],
 })
 export class AppModule {
-    public configure(consumer: MiddlewareConsumer): void {
-        consumer.apply(AuthMiddleware).forRoutes(UsersHttpController);
+    public configure(middlewareConsumer: MiddlewareConsumer): void {
+        middlewareConsumer.apply(AuthMiddleware).forRoutes(UsersHttpController);
     }
 }

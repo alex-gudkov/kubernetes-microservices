@@ -4,15 +4,15 @@ import { ClientOptions, ClientProxy, Closeable, RmqOptions, Transport } from '@n
 import { ClientProxyFactory, IClientProxyFactory } from '@nestjs/microservices/client/client-proxy-factory';
 
 @Injectable()
-export class UsersConfigService implements IClientProxyFactory {
+export class AuthConfigService implements IClientProxyFactory {
     constructor(private configService: ConfigService) {}
 
     public create(clientOptions: ClientOptions): ClientProxy & Closeable {
         const clientRmqOptions: RmqOptions = {
             transport: Transport.RMQ,
             options: {
-                urls: [this.configService.getOrThrow<string>('RABBITMQ_USERS_URL')],
-                queue: this.configService.getOrThrow<string>('RABBITMQ_USERS_QUEUE'),
+                urls: [this.configService.getOrThrow<string>('RABBITMQ_AUTH_URL')],
+                queue: this.configService.getOrThrow<string>('RABBITMQ_AUTH_QUEUE'),
                 queueOptions: {
                     durable: false,
                 },

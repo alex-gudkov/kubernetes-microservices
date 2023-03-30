@@ -13,7 +13,7 @@ export const dataSourceOptions: DataSourceOptions = {
     username: configService.getOrThrow<string>('POSTGRES_USER'),
     password: configService.getOrThrow<string>('POSTGRES_PASSWORD'),
     database: configService.getOrThrow<string>('POSTGRES_DB'),
-    synchronize: true,
+    synchronize: false,
     entities: ['./dist/**/*.entity.js'],
     migrations: ['./dist/migrations/*.js'],
     migrationsTableName: 'migrations',
