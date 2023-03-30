@@ -1,3 +1,4 @@
+import { AuthUtilsModule } from '@libs/auth-utils';
 import { Module } from '@nestjs/common';
 import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
 import { RedisModule } from '@nestjs-modules/ioredis';
@@ -45,6 +46,7 @@ import { SessionsTcpController } from './sessions.tcp.controller';
                 },
             }),
         },
+        AuthUtilsModule,
     ],
     exports: [],
 })

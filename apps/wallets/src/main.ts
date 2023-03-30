@@ -7,6 +7,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create<INestApplication>(AppModule);
+    const port = 3003;
     const microservice = app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.RMQ,
         options: {
@@ -21,7 +22,7 @@ async function bootstrap() {
     app.use(cookieParser());
 
     await app.startAllMicroservices();
-    await app.listen(3003);
+    await app.listen(port);
 }
 
 bootstrap();
