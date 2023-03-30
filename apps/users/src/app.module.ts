@@ -1,4 +1,4 @@
-// import { AuthMiddleware, AuthUtilsModule } from '@libs/auth-utils';
+import { AuthMiddleware, AuthUtilsModule } from '@libs/auth-utils';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
@@ -22,14 +22,14 @@ import { UsersModule } from './users/users.module';
             },
         }),
         UsersModule,
-        // AuthUtilsModule,
+        AuthUtilsModule,
     ],
     controllers: [],
     providers: [],
     exports: [],
 })
 export class AppModule {
-    // public configure(consumer: MiddlewareConsumer): void {
-    //     consumer.apply(AuthMiddleware).forRoutes(UsersHttpController);
-    // }
+    public configure(consumer: MiddlewareConsumer): void {
+        consumer.apply(AuthMiddleware).forRoutes(UsersHttpController);
+    }
 }

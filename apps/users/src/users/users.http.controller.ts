@@ -1,4 +1,4 @@
-// import { AuthGuard } from '@libs/auth-utils';
+import { AuthGuard } from '@libs/auth-utils';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 
 import { UsersEntity } from './entities/users.entity';
@@ -9,7 +9,7 @@ export class UsersHttpController {
     constructor(private readonly usersService: UsersService) {}
 
     @Get('/')
-    // @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard)
     public findAllUsers(): Promise<UsersEntity[]> | void {
         return this.usersService.findAllUsers();
     }
