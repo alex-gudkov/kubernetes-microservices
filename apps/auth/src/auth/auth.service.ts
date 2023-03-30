@@ -8,7 +8,7 @@ import { UsersEntity } from './interfaces/users-entity.interface';
 
 @Injectable()
 export class AuthService {
-    constructor(@Inject('USERS_SERVICE') private readonly usersServiceClient: ClientProxy) {}
+    constructor(@Inject('USERS_SERVICE') private readonly usersServiceClientProxy: ClientProxy) {}
 
     public async signUpUser(signUpUserDto: SignUpUserDto) {
         const findUserByLoginPattern = 'FIND_USER_BY_LOGIN';
@@ -16,7 +16,7 @@ export class AuthService {
             userLogin: signUpUserDto.login,
         };
         const candidateUser = await firstValueFrom(
-            this.usersServiceClient.send<Promise<UsersEntity>>(findUserByLoginPattern, findUserByLoginPayload),
+            this.usersServiceClientProxy.send<Promise<UsersEntity>>(findUserByLoginPattern, findUserByLoginPayload),
         );
 
         if (candidateUser) {
@@ -29,7 +29,7 @@ export class AuthService {
             userPassword: signUpUserDto.password,
         };
         const user = await firstValueFrom(
-            this.usersServiceClient.send<Promise<UsersEntity>>(createUserPattern, createUserPayload),
+            this.usersServiceClientProxy.send<Promise<UsersEntity>>(createUserPattern, createUserPayload),
         );
 
         return user;
@@ -40,7 +40,7 @@ export class AuthService {
         const payload = {
             userLogin: signInUserDto.login,
         };
-        const user = await firstValueFrom(this.usersServiceClient.send<Promise<UsersEntity>>(pattern, payload));
+        const user = await firstValueFrom(this.usersServiceClientProxy.send<Promise<UsersEntity>>(pattern, payload));
 
         if (!user) {
             throw new BadRequestException('User not registered.');
