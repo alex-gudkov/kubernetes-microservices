@@ -17,9 +17,13 @@ import { SessionsTcpController } from './sessions.tcp.controller';
         ClientsModule.register([
             {
                 name: 'USERS_SERVICE',
-                transport: Transport.TCP,
+                transport: Transport.RMQ,
                 options: {
-                    port: 5002,
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'USERS',
+                    queueOptions: {
+                        durable: false,
+                    },
                 },
             },
         ]),
@@ -31,9 +35,13 @@ import { SessionsTcpController } from './sessions.tcp.controller';
         {
             provide: 'USERS_SERVICE',
             useValue: ClientProxyFactory.create({
-                transport: Transport.TCP,
+                transport: Transport.RMQ,
                 options: {
-                    port: 5002,
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'USERS',
+                    queueOptions: {
+                        durable: false,
+                    },
                 },
             }),
         },

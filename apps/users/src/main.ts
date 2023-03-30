@@ -8,9 +8,13 @@ import { AppModule } from './app.module';
 async function bootstrap() {
     const app = await NestFactory.create<INestApplication>(AppModule);
     const microservice = app.connectMicroservice<MicroserviceOptions>({
-        transport: Transport.TCP,
+        transport: Transport.RMQ,
         options: {
-            port: 5002,
+            urls: ['amqp://localhost:5672'],
+            queue: 'USERS',
+            queueOptions: {
+                durable: false,
+            },
         },
     });
 

@@ -6,9 +6,13 @@ import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservi
         ClientsModule.register([
             {
                 name: 'AUTH_SERVICE',
-                transport: Transport.TCP,
+                transport: Transport.RMQ,
                 options: {
-                    port: 5001,
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'AUTH',
+                    queueOptions: {
+                        durable: false,
+                    },
                 },
             },
         ]),
@@ -18,9 +22,13 @@ import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservi
         {
             provide: 'AUTH_SERVICE',
             useValue: ClientProxyFactory.create({
-                transport: Transport.TCP,
+                transport: Transport.RMQ,
                 options: {
-                    port: 5001,
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'AUTH',
+                    queueOptions: {
+                        durable: false,
+                    },
                 },
             }),
         },
@@ -29,9 +37,13 @@ import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservi
         {
             provide: 'AUTH_SERVICE',
             useValue: ClientProxyFactory.create({
-                transport: Transport.TCP,
+                transport: Transport.RMQ,
                 options: {
-                    port: 5001,
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'AUTH',
+                    queueOptions: {
+                        durable: false,
+                    },
                 },
             }),
         },
