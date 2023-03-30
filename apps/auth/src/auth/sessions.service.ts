@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRedis, Redis } from '@nestjs-modules/ioredis';
 import * as uuid from 'uuid';
 
-import { SessionsEntity } from './interfaces/sessions-entity';
-import { UsersEntity } from './interfaces/users-entity';
+import { SessionsEntity } from './interfaces/sessions-entity.interface';
+import { UsersEntity } from './interfaces/users-entity.interface';
 
 @Injectable()
 export class SessionsService {

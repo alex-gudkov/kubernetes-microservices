@@ -4,7 +4,7 @@ import { firstValueFrom } from 'rxjs';
 
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import { UsersEntity } from './interfaces/users-entity';
+import { UsersEntity } from './interfaces/users-entity.interface';
 
 @Injectable()
 export class AuthService {

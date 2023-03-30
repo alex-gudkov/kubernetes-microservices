@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ClientProxyFactory, ClientsModule, TcpClientOptions, Transport } from '@nestjs/microservices';
+import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
 import { RedisModule } from '@nestjs-modules/ioredis';
 
 import { AuthHttpController } from './auth.http.controller';
 import { AuthService } from './auth.service';
-import { AuthTcpController } from './auth.tcp.controller';
 import { SessionsService } from './sessions.service';
+import { SessionsTcpController } from './sessions.tcp.controller';
 
 @Module({
     imports: [
@@ -24,7 +24,7 @@ import { SessionsService } from './sessions.service';
             },
         ]),
     ],
-    controllers: [AuthHttpController, AuthTcpController],
+    controllers: [AuthHttpController, SessionsTcpController],
     providers: [
         AuthService,
         SessionsService,

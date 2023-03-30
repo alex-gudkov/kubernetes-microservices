@@ -4,8 +4,8 @@ import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { SignInUserDto } from './dto/sign-in-user.dto';
 import { SignUpUserDto } from './dto/sign-up-user.dto';
-import { SessionsEntity } from './interfaces/sessions-entity';
-import { UsersEntity } from './interfaces/users-entity';
+import { SessionsEntity } from './interfaces/sessions-entity.interface';
+import { UsersEntity } from './interfaces/users-entity.interface';
 import { SessionsService } from './sessions.service';
 
 @Controller('/auth')

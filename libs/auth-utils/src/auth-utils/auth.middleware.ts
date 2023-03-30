@@ -3,8 +3,8 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Response, NextFunction } from 'express';
 import { firstValueFrom } from 'rxjs';
 
-import { RequestWithCurrentUserId } from './request-with-current-user-id.interface';
-import { SessionsEntity } from './sessions-entity';
+import { RequestWithCurrentUserId } from './interfaces/request-with-current-user-id.interface';
+import { SessionsEntity } from './interfaces/sessions-entity.interface';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {

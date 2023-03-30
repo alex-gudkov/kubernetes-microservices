@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 
-import { RequestWithCurrentUserId } from './request-with-current-user-id.interface';
+import { RequestWithCurrentUserId } from './interfaces/request-with-current-user-id.interface';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

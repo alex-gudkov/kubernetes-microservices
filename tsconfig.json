@@ -21,10 +21,10 @@
         "strictPropertyInitialization": false,
         "paths": {
             "@libs/auth-utils": [
-                "libs/auth-utils/src"
+                "./libs/auth-utils/src"
             ],
             "@libs/auth-utils/*": [
-                "libs/auth-utils/src/*"
+                "./libs/auth-utils/src/*"
             ],
         }
     }
