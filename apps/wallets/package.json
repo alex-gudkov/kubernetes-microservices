@@ -12,7 +12,12 @@
         "start:debug": "nest start --debug --watch",
         "start:prod": "node ./dist/main.js",
         "eslint:fix": "eslint --fix ./src/**/*.ts ./libs/**/*.ts --config ./.eslintrc",
-        "prettier:write": "prettier --write ./src/**/*.ts ./libs/**/*.ts --config ./.prettierrc"
+        "prettier:write": "prettier --write ./src/**/*.ts ./libs/**/*.ts --config ./.prettierrc",
+        "typeorm": "typeorm-ts-node-commonjs",
+        "migration:create": "npm run typeorm migration:create --",
+        "migration:generate": "npm run typeorm migration:generate -- --dataSource ./typeorm/data-source.ts --pretty",
+        "migration:run": "npm run typeorm migration:run -- --dataSource ./typeorm/data-source.ts",
+        "migration:revert": "npm run typeorm migration:revert -- --dataSource ./typeorm/data-source.ts"
     },
     "dependencies": {
         "@nestjs/common": "^9.0.0",

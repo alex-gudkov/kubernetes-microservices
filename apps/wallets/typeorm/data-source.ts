@@ -18,5 +18,4 @@ export const dataSourceOptions: DataSourceOptions = {
     migrations: ['./dist/migrations/*.js'],
     migrationsTableName: 'migrations',
 };
-
 export const dataSource = new DataSource(dataSourceOptions);
