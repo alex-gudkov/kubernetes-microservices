@@ -25,6 +25,16 @@ import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservi
             }),
         },
     ],
-    exports: [],
+    exports: [
+        {
+            provide: 'AUTH_SERVICE',
+            useValue: ClientProxyFactory.create({
+                transport: Transport.TCP,
+                options: {
+                    port: 5001,
+                },
+            }),
+        },
+    ],
 })
 export class AuthGuardModule {}
