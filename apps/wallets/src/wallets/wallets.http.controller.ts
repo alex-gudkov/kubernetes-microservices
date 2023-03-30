@@ -7,7 +7,7 @@ import { WalletsService } from './wallets.service';
 
 @Controller('/wallets')
 @UseGuards(AuthGuard)
-export class WalletsController {
+export class WalletsHttpController {
     constructor(private readonly walletsService: WalletsService) {}
 
     @Post('/')

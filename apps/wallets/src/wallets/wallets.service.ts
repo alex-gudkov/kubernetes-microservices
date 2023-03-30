@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { WalletsEntity } from './entities/wallets.entity';
-import { SessionsEntity } from './interfaces/sessions-entity';
+import { SessionsEntity } from './interfaces/sessions-entity.interface';
 
 @Injectable()
 export class WalletsService {

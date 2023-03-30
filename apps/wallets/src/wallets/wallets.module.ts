@@ -3,7 +3,7 @@ import { ClientsModule, Transport, ClientProxyFactory } from '@nestjs/microservi
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { WalletsEntity } from './entities/wallets.entity';
-import { WalletsController } from './wallets.controller';
+import { WalletsHttpController } from './wallets.http.controller';
 import { WalletsService } from './wallets.service';
 
 @Module({
@@ -23,7 +23,7 @@ import { WalletsService } from './wallets.service';
             },
         ]),
     ],
-    controllers: [WalletsController],
+    controllers: [WalletsHttpController],
     providers: [
         WalletsService,
         {
