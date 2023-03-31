@@ -1,5 +1,25 @@
 # Commands
 
+Docker:
+
+```TEXT
+$ docker images
+$ docker rmi <image-id>
+
+$ docker ps
+$ docker rm <container-id>
+
+$ docker build ./
+$ docker run <image-id>
+```
+
+Docker-compose:
+
+```TEXT
+$ docker-compose up
+$ docker-compose build
+```
+
 PostgreSQL CLI in Docker
 
 ```TEXT
