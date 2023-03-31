@@ -13,11 +13,13 @@ $ docker build ./
 $ docker run <image-id>
 ```
 
-Docker-compose:
+Docker Compose:
 
 ```TEXT
 $ docker-compose up
 $ docker-compose build
+$ docker-compose up --build
+$ docker-compose up --detach --build
 ```
 
 PostgreSQL CLI in Docker
@@ -40,4 +42,12 @@ Stop local PostgreSQL server:
 
 ```TEXT
 $ net stop postgresql-x64-15
+```
+
+Docker networks:
+
+```TEXT
+$ docker network ls
+$ docker network create kubernetes_microservices_network
+$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container-name>
 ```
