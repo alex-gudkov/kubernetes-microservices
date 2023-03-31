@@ -45,6 +45,20 @@ services:
             dockerfile: Dockerfile
         networks:
             - kubernetes_microservices_network
+    users:
+        container_name: kubernetes_microservices_users
+        env_file:
+            - ./apps/users/.env
+        ports:
+            - 3002:3002
+        depends_on:
+            - rabbitmq
+            - postgres
+        build:
+            context: ./apps/users
+            dockerfile: Dockerfile
+        networks:
+            - kubernetes_microservices_network
 
 volumes:
     pg_data:
