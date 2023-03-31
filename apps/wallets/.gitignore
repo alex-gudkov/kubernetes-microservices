@@ -3,6 +3,3 @@
 
 # compiled output
 /dist
-
-# environment 
-/*.env
