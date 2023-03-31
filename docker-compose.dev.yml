@@ -1,32 +1,28 @@
-version: '3.7'
+version: '3.8'
 
 services:
     redis:
-        container_name: kubernetes_microservices_redis
-        image: redis:7
+        container_name: kubernetes_microservices_dev_redis
+        image: redis:7.0.10
         ports:
             - 6379:6379
-        environment:
-            REDIS_HOST: localhost
-            REDIS_PORT: 6379
         volumes:
             - ./redis_data:/data
     postgres:
-        container_name: kubernetes_microservices_postgres
-        image: postgres:14
+        container_name: kubernetes_microservices_dev_postgres
+        image: postgres:15.2
         ports:
             - 5432:5432
         environment:
-            POSTGRES_HOST: localhost
-            POSTGRES_PORT: 5432
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: root
-            POSTGRES_DB: kubernetes_microservices
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "root"
+            POSTGRES_DB: "kubernetes_microservices"
+            POSTGRES_INITDB_ARGS: "--data-checksums"
         volumes:
             - ./pg_data:/var/lib/postgresql
     rabbitmq:
-        container_name: kubernetes_microservices_rabbitmq
-        image: rabbitmq:3
+        container_name: kubernetes_microservices_dev_rabbitmq
+        image: rabbitmq:3.11.11
         ports:
             - 15672:15672
             - 5672:5672

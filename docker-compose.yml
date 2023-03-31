@@ -3,7 +3,7 @@ version: '3.8'
 services:
     redis:
         container_name: kubernetes_microservices_redis
-        image: redis:7
+        image: redis:7.0.10
         ports:
             - 6379:6379
         volumes:
@@ -12,20 +12,20 @@ services:
             - kubernetes_microservices_network
     postgres:
         container_name: kubernetes_microservices_postgres
-        image: postgres:14
+        image: postgres:15.2
         ports:
             - 5432:5432
         environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: root
-            POSTGRES_DB: kubernetes_microservices
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "root"
+            POSTGRES_DB: "kubernetes_microservices"
         volumes:
             - ./pg_data:/var/lib/postgresql
         networks:
             - kubernetes_microservices_network
     rabbitmq:
         container_name: kubernetes_microservices_rabbitmq
-        image: rabbitmq:3
+        image: rabbitmq:3.11.11
         ports:
             - 15672:15672
             - 5672:5672
@@ -33,8 +33,15 @@ services:
             - kubernetes_microservices_network
     auth:
         container_name: kubernetes_microservices_auth
-        env_file:
-            - ./apps/auth/.env
+        environment:
+            # application
+            APP_PORT: "3001"
+            # RabbitMQ
+            RABBITMQ_USERS_URL: "amqp://rabbitmq:5672"
+            RABBITMQ_USERS_QUEUE: "USERS"
+            RABBITMQ_AUTH_URL: "amqp://rabbitmq:5672"
+            RABBITMQ_AUTH_QUEUE: "AUTH"
+            REDIS_URL: "redis://redis:6379"
         ports:
             - 3001:3001
         depends_on:
@@ -47,8 +54,20 @@ services:
             - kubernetes_microservices_network
     users:
         container_name: kubernetes_microservices_users
-        env_file:
-            - ./apps/users/.env
+        environment:
+            # application
+            APP_PORT: "3002"
+            # RabbitMQ
+            RABBITMQ_USERS_URL: "amqp://rabbitmq:5672"
+            RABBITMQ_USERS_QUEUE: "USERS"
+            RABBITMQ_AUTH_URL: "amqp://rabbitmq:5672"
+            RABBITMQ_AUTH_QUEUE: "AUTH"
+            # PostgeSQL
+            POSTGRES_HOST: "postgres"
+            POSTGRES_PORT: "5432"
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "root"
+            POSTGRES_DB: "kubernetes_microservices"
         ports:
             - 3002:3002
         depends_on:
@@ -61,8 +80,22 @@ services:
             - kubernetes_microservices_network
     wallets:
         container_name: kubernetes_microservices_wallets
-        env_file:
-            - ./apps/wallets/.env
+        environment:
+            # application
+            APP_PORT: "3003"
+            # RabbitMQ
+            RABBITMQ_USERS_URL: "amqp://rabbitmq:5672"
+            RABBITMQ_USERS_QUEUE: "USERS"
+            RABBITMQ_AUTH_URL: "amqp://rabbitmq:5672"
+            RABBITMQ_AUTH_QUEUE: "AUTH"
+            RABBITMQ_WALLETS_URL: "amqp://rabbitmq:5672"
+            RABBITMQ_WALLETS_QUEUE: "WALLETS"
+            # PostgeSQL
+            POSTGRES_HOST: "postgres"
+            POSTGRES_PORT: "5432"
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "root"
+            POSTGRES_DB: "kubernetes_microservices"
         ports:
             - 3003:3003
         depends_on:
@@ -77,6 +110,7 @@ services:
 volumes:
     pg_data:
     redis_data:
+
 
 networks:
     kubernetes_microservices_network:

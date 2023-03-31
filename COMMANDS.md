@@ -52,3 +52,12 @@ $ docker network ls
 $ docker network create kubernetes_microservices_network
 $ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container-name>
 ```
+
+Removing Docker data:
+
+```TEXT
+docker image prune
+docker volume prune
+docker network prune
+docker rm $(docker ps --filter status=exited -q)
+```
