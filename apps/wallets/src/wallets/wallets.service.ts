@@ -1,21 +1,18 @@
-import { Session } from 'inspector';
-
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Request } from 'express';
 import { firstValueFrom } from 'rxjs';
 import { Repository } from 'typeorm';
 
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { WalletsEntity } from './entities/wallets.entity';
-import { SessionsEntity } from './interfaces/sessions-entity.interface';
+import { UsersEntity } from './interfaces/users-entity.interface';
 
 @Injectable()
 export class WalletsService {
     constructor(
         @InjectRepository(WalletsEntity) private readonly walletsRepository: Repository<WalletsEntity>,
-        @Inject('AUTH_SERVICE') private readonly authServiceClient: ClientProxy,
+        @Inject('USERS_SERVICE') private readonly usersServiceClientProxy: ClientProxy,
     ) {}
 
     public findWallets(): Promise<WalletsEntity[]> {
@@ -36,7 +33,17 @@ export class WalletsService {
         return this.walletsRepository.save(wallet);
     }
 
-    public createWallet(createWalletDto: CreateWalletDto, userId: number): Promise<WalletsEntity> {
+    public async createWallet(createWalletDto: CreateWalletDto, userId: number): Promise<WalletsEntity> {
+        const pattern = 'FIND_USER_BY_ID';
+        const payload = {
+            userId,
+        };
+        const user = await firstValueFrom(this.usersServiceClientProxy.send<Promise<UsersEntity>>(pattern, payload));
+
+        if (!user) {
+            throw new NotFoundException('User not found.');
+        }
+
         const wallet = this.walletsRepository.create({
             name: createWalletDto.name,
             balance: 0,
@@ -44,27 +51,5 @@ export class WalletsService {
         });
 
         return this.walletsRepository.save(wallet);
-    }
-
-    public async findCurrentSessionOrThrow(request: Request): Promise<SessionsEntity> {
-        const sessionId = request.cookies['SESSION_ID'];
-
-        if (!sessionId) {
-            throw new UnauthorizedException('No SESSION_ID in cookies.');
-        }
-
-        const pattern = 'FIND_SESSION_BY_ID';
-        const payload = {
-            sessionId,
-        };
-        const session = await firstValueFrom(
-            this.authServiceClient.send<Promise<SessionsEntity | null>>(pattern, payload),
-        );
-
-        if (!session) {
-            throw new UnauthorizedException('User not unauthorized.');
-        }
-
-        return session;
     }
 }

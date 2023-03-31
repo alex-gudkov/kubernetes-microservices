@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { AuthGuard } from '@libs/auth-utils';
+import { Body, Controller, Get, Param, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 
 import { AuthService } from './auth.service';
@@ -43,6 +44,7 @@ export class AuthHttpController {
     }
 
     @Get('/sessions/:sessionId')
+    @UseGuards(AuthGuard)
     public findSessionById(@Param('sessionId') sessionId: string): Promise<SessionsEntity | null> {
         return this.sessionsService.findSessionById(sessionId);
     }

@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json.schemastore.org/nest-cli",
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "./src",
+    "projects": {
+        "auth-utils": {
+            "type": "library",
+            "root": "./libs/auth-utils",
+            "entryFile": "index.js",
+            "sourceRoot": "./libs/auth-utils/src",
+            "compilerOptions": {
+                "tsConfigPath": "./libs/auth-utils/tsconfig.lib.json"
+            }
+        }
+    },
+    "compilerOptions": {
+        "webpack": false
+    }
+}

@@ -1,4 +1,5 @@
 import { INestApplication } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import * as cookieParser from 'cookie-parser';
@@ -7,11 +8,13 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create<INestApplication>(AppModule);
+    const configService = app.get<ConfigService>(ConfigService);
+    const port = parseInt(configService.getOrThrow<string>('APP_PORT'), 10);
     const microservice = app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.RMQ,
         options: {
-            urls: ['amqp://localhost:5672'],
-            queue: 'USERS',
+            urls: [configService.getOrThrow<string>('RABBITMQ_USERS_URL')],
+            queue: configService.getOrThrow<string>('RABBITMQ_USERS_QUEUE'),
             queueOptions: {
                 durable: false,
             },
@@ -21,7 +24,7 @@ async function bootstrap() {
     app.use(cookieParser());
 
     await app.startAllMicroservices();
-    await app.listen(3002);
+    await app.listen(port);
 }
 
 bootstrap();
