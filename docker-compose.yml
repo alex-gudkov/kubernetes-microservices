@@ -59,6 +59,20 @@ services:
             dockerfile: Dockerfile
         networks:
             - kubernetes_microservices_network
+    wallets:
+        container_name: kubernetes_microservices_wallets
+        env_file:
+            - ./apps/wallets/.env
+        ports:
+            - 3003:3003
+        depends_on:
+            - rabbitmq
+            - postgres
+        build:
+            context: ./apps/wallets
+            dockerfile: Dockerfile
+        networks:
+            - kubernetes_microservices_network
 
 volumes:
     pg_data:
