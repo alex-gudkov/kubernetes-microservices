@@ -5,8 +5,13 @@ WORKDIR /app
 COPY ./package.json ./
 COPY ./package-lock.json ./
 
+# install dependencies
 RUN npm install --legacy-peer-deps
 
 COPY . .
 
-CMD [ "npm", "run", "start:dev" ]
+# make the entrypoint script executable
+RUN chmod +x ./scripts/entrypoint.sh
+
+# set the entrypoint script as the entry point for the container
+ENTRYPOINT [ "/app/scripts/entrypoint.sh" ]
