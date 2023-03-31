@@ -15,7 +15,7 @@ export const dataSourceOptions: DataSourceOptions = {
     database: configService.getOrThrow<string>('POSTGRES_DB'),
     synchronize: false,
     entities: ['./dist/**/*.entity.js'],
-    migrations: ['./dist/migrations/*.js'],
+    migrations: ['./dist/typeorm/migrations/*.js'],
     migrationsTableName: 'migrations',
 };
 export const dataSource = new DataSource(dataSourceOptions);
