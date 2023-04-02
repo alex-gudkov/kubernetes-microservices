@@ -6,16 +6,16 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Triggered event
-              run: echo "Job was automatically triggered by ${{ github.event_name }} event."
+              run: echo "Triggered event is ${{ github.event_name }}."
 
             - name: Runner OS
-              run: echo "Job is running on ${{ runner.os }} OS.!"
+              run: echo "OS is ${{ runner.os }}."
 
             - name: Branch name
-              run: echo "Name of your branch is ${{ github.ref }}."
+              run: echo "Branch name is ${{ github.ref }}."
 
             - name: Repository name
-              run: echo "Name of your your repository is ${{ github.repository }}."
+              run: echo "Repository name is ${{ github.repository }}."
 
             - name: List repository files
               run: ls ${{ github.workspace }}
