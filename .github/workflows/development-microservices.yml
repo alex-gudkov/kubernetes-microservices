@@ -2,22 +2,22 @@ name: Development microservices
 run-name: development-microservices
 on:
     push:
-        branches:
-            -   main
-            -   ci-cd
+        branches: [main, ci-cd]
 jobs:
     wallets-microservice:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [18.x]
+                node-version: [14.x, 16.x, 18.x]
         steps:
+            -   uses: actions/checkout@v3
             -   name: Choose wallets microservice
                 run: cd ./apps/wallets
             -   name: Set up NodeJS ${{ matrix.node-version }}
                 uses: actions/setup-node@v3
                 with:
                     node-version: ${{ matrix.node-version }}
+                    cache: npm
             -   name: Install dependencies
                 run: npm install --legacy-peer-deps
             -   name: Build project
