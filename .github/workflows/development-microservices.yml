@@ -11,20 +11,22 @@ jobs:
                 node-version: [14.x, 16.x, 18.x]
         steps:
             -   uses: actions/checkout@v3
-            -   name: Choose wallets microservice
-                run: cd ./apps/wallets
             -   name: Set up NodeJS ${{ matrix.node-version }}
                 uses: actions/setup-node@v3
                 with:
                     node-version: ${{ matrix.node-version }}
                     cache: npm
             -   name: Install dependencies
+                working-directory: ./apps/wallets
                 run: npm install --legacy-peer-deps
             -   name: Build project
+                working-directory: ./apps/wallets
                 run: npm run build
             -   name: Test
+                working-directory: ./apps/wallets
                 run: npm run test
             -   name: Prettier
+                working-directory: ./apps/wallets
                 run: npm run prettier:check
             -   name: ESLint
                 run: npm run eslint
