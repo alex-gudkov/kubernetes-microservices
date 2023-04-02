@@ -1,24 +1,28 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions
+run-name: github-actions-demo
 on: [push]
 jobs:
-    gitHub-actions-demo:
+    job-1:
         runs-on: ubuntu-latest
         steps:
-            - name: Triggered event
-              run: echo "Triggered event is ${{ github.event_name }}."
+            -   name: Actor name
+                run: echo "Actor name is ${{ github.actor }}."
 
-            - name: Runner OS
-              run: echo "OS is ${{ runner.os }}."
+            -   name: Triggered event
+                run: echo "Triggered event is ${{ github.event_name }}."
 
-            - name: Branch name
-              run: echo "Branch name is ${{ github.ref }}."
+            -   name: Runner OS
+                run: echo "OS is ${{ runner.os }}."
 
-            - name: Repository name
-              run: echo "Repository name is ${{ github.repository }}."
+            -   name: Branch name
+                run: echo "Branch name is ${{ github.ref }}."
 
-            - name: List repository files
-              run: ls ${{ github.workspace }}
+            -   name: Repository name
+                run: echo "Repository name is ${{ github.repository }}."
 
-            - name: Job status
-              run: echo "Job status is ${{ job.status }}."
+            -   name: List repository files
+                run: |
+                    ls ${{ github.workspace }}
+
+            -   name: Job status
+                run: echo "Job status is ${{ job.status }}."
