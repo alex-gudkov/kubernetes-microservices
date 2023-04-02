@@ -1,6 +1,10 @@
 name: GitHub Actions Demo
 run-name: github-actions-demo
-on: [push]
+on:
+    push:
+        branches:
+            -   main
+            -   ci-cd
 jobs:
     job-1:
         runs-on: ubuntu-latest
