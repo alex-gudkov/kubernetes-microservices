@@ -1,0 +1,12 @@
+name: Docker microservices
+run-name: docker-microservices
+on:
+    push:
+        branches: [main, ci-cd]
+jobs:
+    docker-microservices:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v3
+            -   name: Build Docker Compose
+                run: docker-compose build

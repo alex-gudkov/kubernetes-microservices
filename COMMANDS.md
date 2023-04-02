@@ -9,7 +9,7 @@ $ docker rmi <image-id>
 $ docker ps
 $ docker rm <container-id>
 
-$ docker build ./
+$ docker build ./ --file <file-name> --tag <image-name>
 $ docker run <image-id>
 ```
 
