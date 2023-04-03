@@ -5,12 +5,12 @@ on:
         branches:
             -   main
             -   ci-cd
-defaults:
-        run:
-            working-directory: apps/wallets
 jobs:
     wallets-microservice:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: /apps/wallets
         strategy:
             matrix:
                 node-version:
@@ -22,7 +22,34 @@ jobs:
                 with:
                     node-version: ${{ matrix.node-version }}
                     cache: npm
-                    cache-dependency-path: apps/wallets/package-lock.json
+                    cache-dependency-path: /apps/wallets/package-lock.json
+            -   name: Install dependencies
+                run: npm install --legacy-peer-deps
+            -   name: Build project
+                run: npm run build
+            -   name: Test
+                run: npm run test
+            -   name: Prettier
+                run: npm run prettier:check
+            -   name: ESLint
+                run: npm run eslint
+    users-microservice:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./apps/users
+        strategy:
+            matrix:
+                node-version:
+                    -   18.x
+        steps:
+            -   uses: actions/checkout@v3
+            -   name: Set up NodeJS ${{ matrix.node-version }}
+                uses: actions/setup-node@v3
+                with:
+                    node-version: ${{ matrix.node-version }}
+                    cache: npm
+                    cache-dependency-path: ./apps/users/package-lock.json
             -   name: Install dependencies
                 run: npm install --legacy-peer-deps
             -   name: Build project
