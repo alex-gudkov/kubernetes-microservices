@@ -17,7 +17,7 @@ Docker Compose:
 
 ```TEXT
 $ docker-compose up
-$ docker-compose --file ./docker-compose.dev.yml up
+$ docker-compose --file ./docker-compose.dev.yaml up
 $ docker-compose build
 $ docker-compose up --build
 $ docker-compose up --detach --build
