@@ -3,22 +3,25 @@ run-name: nodejs
 
 on:
     push:
-        branches: [main, ci-cd]
+        branches:
+            -   main
+            -   ci-cd
 jobs:
-    build:
+    job-1:
         runs-on: ubuntu-latest
-
+        defaults:
+            run:
+                working-directory: ./apps/wallets
         strategy:
             matrix:
                 node-version: [14.x, 16.x, 18.x]
-
         steps:
             -   uses: actions/checkout@v3
             -   name: Set up NodeJS ${{ matrix.node-version }}
                 uses: actions/setup-node@v3
                 with:
                     node-version: ${{ matrix.node-version }}
-                    cache: "npm"
+                    cache: npm
             -   run: npm ci
             -   run: npm run build --if-present
             -   run: npm test

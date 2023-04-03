@@ -2,13 +2,21 @@ name: Development microservices
 run-name: development-microservices
 on:
     push:
-        branches: [main, ci-cd]
+        branches:
+            -   main
+            -   ci-cd
+defaults:
+        run:
+            working-directory: ./apps/wallets
 jobs:
     wallets-microservice:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [14.x, 16.x, 18.x]
+                node-version:
+                    -   14.x
+                    -   16.x
+                    -   18.x
         steps:
             -   uses: actions/checkout@v3
             -   name: Set up NodeJS ${{ matrix.node-version }}
@@ -16,17 +24,14 @@ jobs:
                 with:
                     node-version: ${{ matrix.node-version }}
                     cache: npm
+                    cache-dependency-path: ./apps/wallets/package-lock.json
             -   name: Install dependencies
-                working-directory: ./apps/wallets
                 run: npm install --legacy-peer-deps
             -   name: Build project
-                working-directory: ./apps/wallets
                 run: npm run build
             -   name: Test
-                working-directory: ./apps/wallets
                 run: npm run test
             -   name: Prettier
-                working-directory: ./apps/wallets
                 run: npm run prettier:check
             -   name: ESLint
                 run: npm run eslint
