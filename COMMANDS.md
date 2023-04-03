@@ -56,19 +56,18 @@ $ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <
 Removing Docker data:
 
 ```TEXT
-docker image prune
-docker volume prune
-docker network prune
-docker rm $(docker ps --filter status=exited -q)
+$ docker image prune
+$ docker volume prune
+$ docker network prune
+$ docker rm $(docker ps --filter status=exited -q)
 ```
 
-Kubernetes
+Kubernetes command-line tool:
 ```TEXT
 $ kubectl get pods -A
 $ kubectl get services
 $ kubectl get deployment
 
-$ kubectl create -f <file-name>
+$ kubectl create --filename <file-name>
 $ kubectl logs <pod-name>
-
 ```
