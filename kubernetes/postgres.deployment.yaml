@@ -2,21 +2,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: postgres
+    selector:
+        matchLabels:
+            app.kubernetes.io/name: kubernetes-microservices
+            app.kubernetes.io/component: postgres
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: postgres
-    strategy:
-        type: Recreate
+            app.kubernetes.io/name: kubernetes-microservices
+            app.kubernetes.io/component: postgres
     template:
         metadata:
             labels:
-                app: postgres
+                app.kubernetes.io/name: kubernetes-microservices
+                app.kubernetes.io/component: postgres
         spec:
             containers:
                 -   name: postgres
                     image: postgres:15.2
+                    imagePullPolicy: IfNotPresent
+                    ports:
+                        -   name: postgres-port-5432
+                            containerPort: 5432
                     env:
                         -   name: POSTGRES_DB
                             value: "kubernetes_microservices"
@@ -24,8 +32,6 @@ spec:
                             value: "root"
                         -   name: POSTGRES_USER
                             value: "postgres"
-                    ports:
-                        - containerPort: 5432
                     volumeMounts:
                         -   name: pg-data
                             mountPath: /var/lib/postgresql
