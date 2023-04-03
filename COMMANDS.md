@@ -61,3 +61,14 @@ docker volume prune
 docker network prune
 docker rm $(docker ps --filter status=exited -q)
 ```
+
+Kubernetes
+```TEXT
+$ kubectl get pods -A
+$ kubectl get services
+$ kubectl get deployment
+
+$ kubectl create -f <file-name>
+$ kubectl logs <pod-name>
+
+```
