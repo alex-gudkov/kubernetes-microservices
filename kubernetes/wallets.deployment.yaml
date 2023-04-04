@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: wallets
+    labels:
+        app.kubernetes.io/name: kubernetes-microservices
+        app.kubernetes.io/component: wallets
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app.kubernetes.io/name: kubernetes-microservices
+            app.kubernetes.io/component: wallets
+    template:
+        metadata:
+            labels:
+                app.kubernetes.io/name: kubernetes-microservices
+                app.kubernetes.io/component: wallets
+        spec:
+            containers:
+                -   name: wallets
+                    image: alexgudkov/kubernetes-microservices-wallets
+                    imagePullPolicy: IfNotPresent
+                    ports:
+                        -   name: port-3003
+                            containerPort: 3003
+                    env:
+                        # application
+                        -   name: APP_PORT
+                            value: "3003"
+                        # RabbitMQ
+                        -   name: RABBITMQ_USERS_URL
+                            value: "amqp://rabbitmq:5672"
+                        -   name: RABBITMQ_USERS_QUEUE
+                            value: "USERS"
+                        -   name: RABBITMQ_AUTH_URL
+                            value: "amqp://rabbitmq:5672"
+                        -   name: RABBITMQ_AUTH_QUEUE
+                            value: "AUTH"
+                        -   name: RABBITMQ_WALLETS_URL
+                            value: "amqp://rabbitmq:5672"
+                        -   name: RABBITMQ_WALLETS_QUEUE
+                            value: "WALLETS"
+                        # PostgeSQL
+                        -   name: POSTGRES_HOST
+                            value: "postgres"
+                        -   name: POSTGRES_PORT
+                            value: "5432"
+                        -   name: POSTGRES_USER
+                            value: "postgres"
+                        -   name: POSTGRES_PASSWORD
+                            value: "root"
+                        -   name: POSTGRES_DB
+                            value: "kubernetes_microservices"
+            restartPolicy: Always
