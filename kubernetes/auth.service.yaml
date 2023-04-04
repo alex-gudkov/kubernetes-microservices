@@ -6,7 +6,7 @@ metadata:
         app.kubernetes.io/name: kubernetes-microservices
         app.kubernetes.io/component: auth
 spec:
-    type: NodePort
+    type: ClusterIP
     selector: 
         app.kubernetes.io/name: kubernetes-microservices
         app.kubernetes.io/component: auth
