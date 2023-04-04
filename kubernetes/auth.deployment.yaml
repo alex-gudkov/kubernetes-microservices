@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: users
+    name: auth
     labels:
         app.kubernetes.io/name: kubernetes-microservices
-        app.kubernetes.io/component: users
+        app.kubernetes.io/component: auth
 spec:
     replicas: 1
     selector:
         matchLabels:
             app.kubernetes.io/name: kubernetes-microservices
-            app.kubernetes.io/component: users
+            app.kubernetes.io/component: auth
     template:
         metadata:
             labels:
                 app.kubernetes.io/name: kubernetes-microservices
-                app.kubernetes.io/component: users
+                app.kubernetes.io/component: auth
         spec:
             containers:
-                -   name: users
-                    image: alexgudkov/kubernetes-microservices-users
+                -   name: auth
+                    image: alexgudkov/kubernetes-microservices-auth
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-3002
-                            containerPort: 3002
+                        -   name: port-3001
+                            containerPort: 3001
                     env:
                         # application
                         -   name: APP_PORT
-                            value: "3002"
+                            value: "3001"
                         # RabbitMQ
                         -   name: RABBITMQ_USERS_URL
                             value: "amqp://rabbitmq:5672"
@@ -37,15 +37,7 @@ spec:
                             value: "amqp://rabbitmq:5672"
                         -   name: RABBITMQ_AUTH_QUEUE
                             value: "AUTH"
-                        # PostgeSQL
-                        -   name: POSTGRES_HOST
-                            value: "postgres"
-                        -   name: POSTGRES_PORT
-                            value: "5432"
-                        -   name: POSTGRES_USER
-                            value: "postgres"
-                        -   name: POSTGRES_PASSWORD
-                            value: "root"
-                        -   name: POSTGRES_DB
-                            value: "kubernetes_microservices"
+                        # Redis
+                        -   name: REDIS_URL
+                            value: "redis://redis:6379"
             restartPolicy: Always

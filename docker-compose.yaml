@@ -41,6 +41,7 @@ services:
             RABBITMQ_USERS_QUEUE: "USERS"
             RABBITMQ_AUTH_URL: "amqp://rabbitmq:5672"
             RABBITMQ_AUTH_QUEUE: "AUTH"
+            # Redis
             REDIS_URL: "redis://redis:6379"
         ports:
             - 3001:3001
