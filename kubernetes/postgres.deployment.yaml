@@ -38,4 +38,11 @@ spec:
                         requests:
                             memory: 512Mi
                             cpu: 100m
+                    volumeMounts:
+                      -     name: postgres-data
+                            mountPath: /var/lib/postgresql
+            volumes:
+                -   name: postgres-data
+                    persistentVolumeClaim:
+                        claimName: postgres-pvc
             restartPolicy: Always
