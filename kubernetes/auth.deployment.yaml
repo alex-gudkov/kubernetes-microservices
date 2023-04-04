@@ -40,4 +40,11 @@ spec:
                         # Redis
                         -   name: REDIS_URL
                             value: "redis://redis:6379"
+                    resources:
+                        limits:
+                            memory: 512Mi
+                            cpu: 100m
+                        requests:
+                            memory: 512Mi
+                            cpu: 100m
             restartPolicy: Always

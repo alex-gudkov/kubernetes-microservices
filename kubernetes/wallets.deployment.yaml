@@ -52,4 +52,11 @@ spec:
                             value: "root"
                         -   name: POSTGRES_DB
                             value: "kubernetes_microservices"
+                    resources:
+                        limits:
+                            memory: 512Mi
+                            cpu: 100m
+                        requests:
+                            memory: 512Mi
+                            cpu: 100m
             restartPolicy: Always

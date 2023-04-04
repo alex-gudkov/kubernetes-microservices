@@ -24,4 +24,11 @@ spec:
                     ports:
                         -   name: port-6379
                             containerPort: 6379
+                    resources:
+                        limits:
+                            memory: 512Mi
+                            cpu: 100m
+                        requests:
+                            memory: 512Mi
+                            cpu: 100m
             restartPolicy: Always
