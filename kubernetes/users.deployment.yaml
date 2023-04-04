@@ -22,27 +22,30 @@ spec:
                     image: alexgudkov/kubernetes-microservices-users
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-3001
-                            containerPort: 3001
+                        -   name: port-3002
+                            containerPort: 3002
                     env:
+                        # application
                         -   name: APP_PORT
                             value: "3002"
-                        -   name: POSTGRES_DB
-                            value: kubernetes_microservices
+                        # PostgeSQL
                         -   name: POSTGRES_HOST
                             value: "postgres"
-                        -   name: POSTGRES_PASSWORD
-                            value: "root"
                         -   name: POSTGRES_PORT
                             value: "5432"
                         -   name: POSTGRES_USER
                             value: "postgres"
-                        -   name: RABBITMQ_USERS_QUEUE
-                            value: "users"
+                        -   name: POSTGRES_PASSWORD
+                            value: "root"
+                        -   name: POSTGRES_DB
+                            value: "kubernetes_microservices"
+                        # RabbitMQ
                         -   name: RABBITMQ_USERS_URL
                             value: "amqp://rabbitmq:5672"
                         -   name: RABBITMQ_USERS_QUEUE
                             value: "USERS"
-                        -   name: RABBITMQ_USERS_URL
+                        -   name: RABBITMQ_AUTH_URL
                             value: "amqp://rabbitmq:5672"
+                        -   name: RABBITMQ_AUTH_QUEUE
+                            value: "AUTH"
             restartPolicy: Always

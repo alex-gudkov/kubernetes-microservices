@@ -25,10 +25,10 @@ spec:
                         -   name: port-5432
                             containerPort: 5432
                     env:
-                        -   name: POSTGRES_DB
-                            value: "kubernetes_microservices"
-                        -   name: POSTGRES_PASSWORD
-                            value: "root"
                         -   name: POSTGRES_USER
                             value: "postgres"
+                        -   name: POSTGRES_PASSWORD
+                            value: "root"
+                        -   name: POSTGRES_DB
+                            value: "kubernetes_microservices"
             restartPolicy: Always

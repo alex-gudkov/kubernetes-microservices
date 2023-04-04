@@ -6,21 +6,18 @@ Docker:
 $ docker images
 $ docker rmi <image-id>
 
-$ docker ps
+$ docker ps [-a]
 $ docker rm <container-id>
 
-$ docker build ./ --file <file-name> --tag <image-name>
+$ docker build ./ [--file <file-name>] [--tag <image-name>]
 $ docker run <image-id>
 ```
 
 Docker Compose:
 
 ```TEXT
-$ docker-compose up
-$ docker-compose --file ./docker-compose.dev.yaml up
 $ docker-compose build
-$ docker-compose up --build
-$ docker-compose up --detach --build
+$ docker-compose [--file <file-name>] up [--build] [--detach]
 ```
 
 PostgreSQL CLI in Docker
@@ -60,14 +57,4 @@ $ docker image prune
 $ docker volume prune
 $ docker network prune
 $ docker rm $(docker ps --filter status=exited -q)
-```
-
-Kubernetes command-line tool:
-```TEXT
-$ kubectl get pods -A
-$ kubectl get services
-$ kubectl get deployment
-
-$ kubectl create --filename <file-name>
-$ kubectl logs <pod-name>
 ```

@@ -1,8 +1,8 @@
-# Google Cloud SDK
+# Kubernetes
 
-Kubernetes set up:
+Set up Kubernetes in Google Cloud Platform:
 
-```TEXT
+```CMD
 > gcloud init
 > gcloud services enable container.googleapis.com
 > gcloud config set project positive-winter-382706
@@ -14,12 +14,14 @@ Kubernetes set up:
 
 > kubectl cluster-info
 > kubectl get namespaces
-> kubectl get pods
 ```
 
-```TEXT
-> kubectl apply --filename <deployment-file> | <service-file> | <job-file>
-> kubectl get pods
-> kubectl logs <workload-names>
+Kubernetes command-line tool:
 
+```CMD
+> kubectl apply --filename <deployment-file> | <service-file> | <job-file>
+> kubectl get pods [-A]
+> kubectl get services
+> kubectl get deployment
+> kubectl logs <workload-name>
 ```
