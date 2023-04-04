@@ -16,3 +16,10 @@ Kubernetes set up:
 > kubectl get namespaces
 > kubectl get pods
 ```
+
+```TEXT
+> kubectl apply --filename <deployment-file> | <service-file> | <job-file>
+> kubectl get pods
+> kubectl logs <workload-names>
+
+```

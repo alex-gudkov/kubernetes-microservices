@@ -2,20 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: rabbitmq
+    labels:
+        app.kubernetes.io/name: kubernetes-microservices
+        app.kubernetes.io/component: rabbitmq
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: rabbitmq
+            app.kubernetes.io/name: kubernetes-microservices
+            app.kubernetes.io/component: rabbitmq
     template:
         metadata:
             labels:
-                app: rabbitmq
+                app.kubernetes.io/name: kubernetes-microservices
+                app.kubernetes.io/component: rabbitmq
         spec:
             containers:
                 -   name: rabbitmq
                     image: rabbitmq:3.11.11
+                    imagePullPolicy: IfNotPresent
                     ports:
-                        - containerPort: 15672
-                        - containerPort: 5672
+                        -   name: port-15432
+                            containerPort: 15672
+                        -   name: port-5432
+                            containerPort: 5672
             restartPolicy: Always

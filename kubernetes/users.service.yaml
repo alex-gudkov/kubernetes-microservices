@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: auth
+    name: users
     labels:
         app.kubernetes.io/name: kubernetes-microservices
-        app.kubernetes.io/component: auth
+        app.kubernetes.io/component: users
 spec:
     type: ClusterIP
     selector: 
         app.kubernetes.io/name: kubernetes-microservices
-        app.kubernetes.io/component: auth
+        app.kubernetes.io/component: users
     ports:
-        -   name: auth-port-3001
+        -   name: port-3001
             protocol: TCP
             port: 3001
-            targetPort: auth-port-3001
+            targetPort: port-3001

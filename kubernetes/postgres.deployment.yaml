@@ -2,10 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: postgres
-    selector:
-        matchLabels:
-            app.kubernetes.io/name: kubernetes-microservices
-            app.kubernetes.io/component: postgres
+    labels:
+        app.kubernetes.io/name: kubernetes-microservices
+        app.kubernetes.io/component: postgres
 spec:
     replicas: 1
     selector:
@@ -23,7 +22,7 @@ spec:
                     image: postgres:15.2
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: postgres-port-5432
+                        -   name: port-5432
                             containerPort: 5432
                     env:
                         -   name: POSTGRES_DB
@@ -32,11 +31,4 @@ spec:
                             value: "root"
                         -   name: POSTGRES_USER
                             value: "postgres"
-                    volumeMounts:
-                        -   name: postgres-pv-storage
-                            mountPath: /var/lib/postgresql/data
             restartPolicy: Always
-            volumes:
-                -   name: postgres-pv-storage
-                    persistentVolumeClaim:
-                        claimName: postgres-pv-claim
