@@ -22,18 +22,18 @@ Docker Compose:
 > docker-compose [--file <file-name>] up [--build] [--detach]
 ```
 
-PostgreSQL CLI:
+Connect to PostgreSQL CLI:
 
 ```CMD
-> docker exec -it kubernetes_microservices_postgres -- bash
-# psql -U postgres -h localhost -p 5432
+> docker exec -it kubernetes_microservices_postgres sh
+# psql -U postgres
 postgres=# \l
 ```
 
-Redis CLI:
+Connect to Redis CLI:
 
 ```CMD
-> docker exec -it kubernetes_microservices_redis -- bash
+> docker exec -it kubernetes_microservices_redis sh
 # redis-cli
 127.0.0.1:6379> keys *
 ```
