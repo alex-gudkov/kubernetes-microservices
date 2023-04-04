@@ -33,10 +33,10 @@ spec:
                         -   name: POSTGRES_USER
                             value: "postgres"
                     volumeMounts:
-                        -   name: pg-data
-                            mountPath: /var/lib/postgresql
+                        -   name: postgres-pv-storage
+                            mountPath: /var/lib/postgresql/data
             restartPolicy: Always
             volumes:
-                -   name: pg-data
+                -   name: postgres-pv-storage
                     persistentVolumeClaim:
-                        claimName: pg-data
+                        claimName: postgres-pv-claim
