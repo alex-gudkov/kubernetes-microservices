@@ -11,6 +11,14 @@ export class AuthService {
     constructor(@Inject('USERS_SERVICE') private readonly usersServiceClientProxy: ClientProxy) {}
 
     public async signUpUser(signUpUserDto: SignUpUserDto) {
+        if (!signUpUserDto.login) {
+            throw new BadRequestException('User login not specified.');
+        }
+
+        if (!signUpUserDto.password) {
+            throw new BadRequestException('User password not specified.');
+        }
+
         const findUserByLoginPattern = 'FIND_USER_BY_LOGIN';
         const findUserByLoginPayload = {
             userLogin: signUpUserDto.login,
@@ -36,6 +44,14 @@ export class AuthService {
     }
 
     public async signInUser(signInUserDto: SignInUserDto): Promise<UsersEntity> {
+        if (!signInUserDto.login) {
+            throw new BadRequestException('User login not specified.');
+        }
+
+        if (!signInUserDto.password) {
+            throw new BadRequestException('User password not specified.');
+        }
+
         const pattern = 'FIND_USER_BY_LOGIN';
         const payload = {
             userLogin: signInUserDto.login,

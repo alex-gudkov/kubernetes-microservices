@@ -23,7 +23,7 @@ export class WalletsHttpController {
         return this.walletsService.findWallets();
     }
 
-    @Patch('/:walletId')
+    @Patch('/:walletId/put-money')
     public putMoneyOnWallet(
         @Param('walletId', ParseIntPipe) walletId: number,
         @Body() { moneyAmount },
