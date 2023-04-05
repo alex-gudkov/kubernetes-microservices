@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: wallets
+    labels:
+        app.kubernetes.io/name: kubernetes-microservices
+        app.kubernetes.io/component: wallets
+spec:
+    rules:
+        -   host: "rm-corporate.ru"
+            http:
+                paths:
+                    -   path: "/"
+                        pathType: Prefix
+                        backend:
+                            service:
+                                name: wallets
+                                port:
+                                    name: port-wallets

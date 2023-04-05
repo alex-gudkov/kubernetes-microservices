@@ -9,4 +9,6 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-CMD [ "npm", "run", "start:dev" ]
+RUN chmod +x ./scripts/entrypoint.sh
+
+ENTRYPOINT [ "/app/scripts/entrypoint.sh" ]

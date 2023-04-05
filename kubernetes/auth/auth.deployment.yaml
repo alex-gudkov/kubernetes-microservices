@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: auth
+    labels:
+        app.kubernetes.io/name: kubernetes-microservices
+        app.kubernetes.io/component: auth
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app.kubernetes.io/name: kubernetes-microservices
+            app.kubernetes.io/component: auth
+    template:
+        metadata:
+            labels:
+                app.kubernetes.io/name: kubernetes-microservices
+                app.kubernetes.io/component: auth
+        spec:
+            containers:
+                -   name: auth
+                    image: alexgudkov/kubernetes-microservices-auth
+                    imagePullPolicy: IfNotPresent
+                    ports:
+                        -   name: port-auth
+                            containerPort: 3001
+                    env:
+                        # application
+                        -   name: APP_PORT
+                            value: "3001"
+                        # RabbitMQ
+                        -   name: RABBITMQ_USERS_URL
+                            value: "amqp://rabbitmq:5672"
+                        -   name: RABBITMQ_USERS_QUEUE
+                            value: "USERS"
+                        -   name: RABBITMQ_AUTH_URL
+                            value: "amqp://rabbitmq:5672"
+                        -   name: RABBITMQ_AUTH_QUEUE
+                            value: "AUTH"
+                        # Redis
+                        -   name: REDIS_URL
+                            value: "redis://redis:6379"
+                    resources:
+                        limits:
+                            memory: 512Mi
+                            cpu: 250m
+                        requests:
+                            memory: 512Mi
+                            cpu: 250m
+            restartPolicy: Always
