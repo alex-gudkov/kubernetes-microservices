@@ -1,5 +1,3 @@
-import { log } from 'console';
-
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,7 +20,7 @@ export class WalletsService {
     }
 
     public async putMoneyOnWallet(walletId: number, moneyAmount: string): Promise<WalletsEntity> {
-        if (!parseInt(moneyAmount, 10)) {
+        if (!Number(moneyAmount)) {
             throw new BadRequestException('Money amount not specified.');
         }
 
@@ -40,10 +38,6 @@ export class WalletsService {
     }
 
     public async createWallet(createWalletDto: CreateWalletDto, userId: number): Promise<WalletsEntity> {
-        if (!createWalletDto.name) {
-            throw new BadRequestException('Wallet name not specified.');
-        }
-
         const pattern = 'FIND_USER_BY_ID';
         const payload = {
             userId,

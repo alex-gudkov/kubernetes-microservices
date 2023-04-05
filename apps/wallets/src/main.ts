@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
@@ -22,6 +22,7 @@ async function bootstrap() {
     });
 
     app.use(cookieParser());
+    app.useGlobalPipes(new ValidationPipe());
 
     await app.startAllMicroservices();
     await app.listen(port);
