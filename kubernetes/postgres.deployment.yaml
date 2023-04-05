@@ -22,7 +22,7 @@ spec:
                     image: postgres:15.2
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-5432
+                        -   name: port-postgres
                             containerPort: 5432
                     env:
                         -   name: POSTGRES_USER
@@ -34,10 +34,10 @@ spec:
                     resources:
                         limits:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
                         requests:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
                     volumeMounts:
                       -     name: postgres-data
                             mountPath: /var/lib/postgresql

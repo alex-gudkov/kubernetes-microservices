@@ -11,7 +11,7 @@ spec:
         app.kubernetes.io/name: kubernetes-microservices
         app.kubernetes.io/component: rabbitmq
     ports:
-        -   name: port-5672
+        -   name: port-rabbitmq
             protocol: TCP
             port: 5672
-            targetPort: port-5672
+            targetPort: port-rabbitmq

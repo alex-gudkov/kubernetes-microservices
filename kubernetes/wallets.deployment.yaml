@@ -22,7 +22,7 @@ spec:
                     image: alexgudkov/kubernetes-microservices-wallets
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-3003
+                        -   name: port-wallets
                             containerPort: 3003
                     env:
                         # application

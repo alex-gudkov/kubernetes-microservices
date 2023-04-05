@@ -22,7 +22,7 @@ spec:
                     image: alexgudkov/kubernetes-microservices-users
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-3002
+                        -   name: port-users
                             containerPort: 3002
                     env:
                         # application

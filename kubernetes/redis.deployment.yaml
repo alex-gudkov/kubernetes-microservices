@@ -22,15 +22,15 @@ spec:
                     image: redis:7.0.10
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-6379
+                        -   name: port-redis
                             containerPort: 6379
                     resources:
                         limits:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
                         requests:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
                     volumeMounts:
                       -     name: redis-data
                             mountPath: /data

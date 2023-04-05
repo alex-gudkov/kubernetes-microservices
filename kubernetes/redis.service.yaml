@@ -11,7 +11,7 @@ spec:
         app.kubernetes.io/name: kubernetes-microservices
         app.kubernetes.io/component: redis
     ports:
-        -   name: port-6379
+        -   name: port-redis
             protocol: TCP
             port: 6379
-            targetPort: port-6379
+            targetPort: port-redis

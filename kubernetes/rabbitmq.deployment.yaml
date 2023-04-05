@@ -22,13 +22,13 @@ spec:
                     image: rabbitmq:3.11.11
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-5672
+                        -   name: port-rabbitmq
                             containerPort: 5672
                     resources:
                         limits:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
                         requests:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
             restartPolicy: Always
