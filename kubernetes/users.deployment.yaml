@@ -51,8 +51,8 @@ spec:
                     resources:
                         limits:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
                         requests:
                             memory: 512Mi
-                            cpu: 100m
+                            cpu: 250m
             restartPolicy: Always
