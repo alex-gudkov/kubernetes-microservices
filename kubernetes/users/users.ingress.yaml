@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: users
+    labels:
+        app.kubernetes.io/name: kubernetes-microservices
+        app.kubernetes.io/component: users
+spec:
+    rules:
+        -   host: "rm-corporate.ru"
+            http:
+                paths:
+                    -   path: "/"
+                        pathType: Prefix
+                        backend:
+                            service:
+                                name: users
+                                port:
+                                    name: port-users
