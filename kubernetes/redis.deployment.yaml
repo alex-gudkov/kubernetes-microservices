@@ -31,4 +31,11 @@ spec:
                         requests:
                             memory: 512Mi
                             cpu: 100m
+                    volumeMounts:
+                      -     name: redis-data
+                            mountPath: /data
+            volumes:
+                -   name: redis-data
+                    persistentVolumeClaim:
+                        claimName: redis-pvc
             restartPolicy: Always
