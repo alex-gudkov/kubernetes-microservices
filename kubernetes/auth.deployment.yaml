@@ -22,7 +22,7 @@ spec:
                     image: alexgudkov/kubernetes-microservices-auth
                     imagePullPolicy: IfNotPresent
                     ports:
-                        -   name: port-3001
+                        -   name: port-auth
                             containerPort: 3001
                     env:
                         # application

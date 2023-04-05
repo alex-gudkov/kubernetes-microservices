@@ -17,4 +17,4 @@ spec:
                             service:
                                 name: auth
                                 port:
-                                    name: port-3001
+                                    name: port-auth
