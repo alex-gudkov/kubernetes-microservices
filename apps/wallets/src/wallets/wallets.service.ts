@@ -21,8 +21,8 @@ export class WalletsService {
         return this.walletsRepository.find({});
     }
 
-    public async putMoneyOnWallet(walletId: number, moneyAmount: number): Promise<WalletsEntity> {
-        if (!moneyAmount) {
+    public async putMoneyOnWallet(walletId: number, moneyAmount: string): Promise<WalletsEntity> {
+        if (!parseInt(moneyAmount, 10)) {
             throw new BadRequestException('Money amount not specified.');
         }
 
