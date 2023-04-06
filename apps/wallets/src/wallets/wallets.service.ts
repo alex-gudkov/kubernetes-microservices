@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { firstValueFrom } from 'rxjs';
@@ -19,7 +19,11 @@ export class WalletsService {
         return this.walletsRepository.find({});
     }
 
-    public async putMoneyOnWallet(walletId: number, moneyAmount: number): Promise<WalletsEntity> {
+    public async putMoneyOnWallet(walletId: number, moneyAmount: string): Promise<WalletsEntity> {
+        if (!Number(moneyAmount)) {
+            throw new BadRequestException('Money amount not specified.');
+        }
+
         const wallet = await this.walletsRepository.findOneBy({
             id: walletId,
         });

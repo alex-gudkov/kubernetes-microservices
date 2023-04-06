@@ -8,8 +8,8 @@ export const usersServiceProvider: FactoryProvider<ClientProxy & Closeable> = {
         const clientRmqOptions: RmqOptions = {
             transport: Transport.RMQ,
             options: {
-                urls: [configService.getOrThrow<string>('RABBITMQ_USERS_URL')],
-                queue: configService.getOrThrow<string>('RABBITMQ_USERS_QUEUE'),
+                urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
+                queue: 'USERS',
                 queueOptions: {
                     durable: false,
                 },

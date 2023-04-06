@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
@@ -13,8 +13,8 @@ async function bootstrap() {
     const microservice = app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.RMQ,
         options: {
-            urls: [configService.getOrThrow<string>('RABBITMQ_AUTH_URL')],
-            queue: configService.getOrThrow<string>('RABBITMQ_AUTH_QUEUE'),
+            urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
+            queue: 'AUTH',
             queueOptions: {
                 durable: false,
             },
@@ -22,6 +22,7 @@ async function bootstrap() {
     });
 
     app.use(cookieParser());
+    app.useGlobalPipes(new ValidationPipe());
 
     await app.startAllMicroservices();
     await app.listen(port);
