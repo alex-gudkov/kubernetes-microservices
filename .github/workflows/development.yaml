@@ -1,10 +1,10 @@
-name: Development microservices
-run-name: development-microservices
+name: Development
+run-name: development
 on:
     push:
         branches:
             -   main
-            -   ci-cd
+            -   dev
 jobs:
     auth-microservice:
         runs-on: ubuntu-latest
@@ -16,7 +16,8 @@ jobs:
                 node-version:
                     -   18.x
         steps:
-            -   uses: actions/checkout@v3
+            -   name: Checkout
+                uses: actions/checkout@v3
             -   name: Set up NodeJS ${{ matrix.node-version }}
                 uses: actions/setup-node@v3
                 with:
@@ -25,14 +26,14 @@ jobs:
                     cache-dependency-path: ./apps/auth/package-lock.json
             -   name: Install dependencies
                 run: npm install --legacy-peer-deps
-            -   name: Build project
-                run: npm run build
-            -   name: Test
-                run: npm run test
             -   name: Prettier
                 run: npm run prettier:check
             -   name: ESLint
                 run: npm run eslint
+            -   name: Test
+                run: npm run test
+            -   name: Build project
+                run: npm run build
     users-microservice:
         runs-on: ubuntu-latest
         defaults:
@@ -43,7 +44,8 @@ jobs:
                 node-version:
                     -   18.x
         steps:
-            -   uses: actions/checkout@v3
+            -   name: Checkout
+                uses: actions/checkout@v3
             -   name: Set up NodeJS ${{ matrix.node-version }}
                 uses: actions/setup-node@v3
                 with:
@@ -52,14 +54,14 @@ jobs:
                     cache-dependency-path: ./apps/users/package-lock.json
             -   name: Install dependencies
                 run: npm install --legacy-peer-deps
-            -   name: Build project
-                run: npm run build
-            -   name: Test
-                run: npm run test
             -   name: Prettier
                 run: npm run prettier:check
             -   name: ESLint
                 run: npm run eslint
+            -   name: Test
+                run: npm run test
+            -   name: Build project
+                run: npm run build
     wallets-microservice:
         runs-on: ubuntu-latest
         defaults:
@@ -70,7 +72,8 @@ jobs:
                 node-version:
                     -   18.x
         steps:
-            -   uses: actions/checkout@v3
+            -   name: Checkout
+                uses: actions/checkout@v3
             -   name: Set up NodeJS ${{ matrix.node-version }}
                 uses: actions/setup-node@v3
                 with:
@@ -79,12 +82,11 @@ jobs:
                     cache-dependency-path: ./apps/wallets/package-lock.json
             -   name: Install dependencies
                 run: npm install --legacy-peer-deps
-            -   name: Build project
-                run: npm run build
-            -   name: Test
-                run: npm run test
             -   name: Prettier
                 run: npm run prettier:check
             -   name: ESLint
                 run: npm run eslint
-
+            -   name: Test
+                run: npm run test
+            -   name: Build project
+                run: npm run build

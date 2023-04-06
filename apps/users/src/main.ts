@@ -13,8 +13,8 @@ async function bootstrap() {
     const microservice = app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.RMQ,
         options: {
-            urls: [configService.getOrThrow<string>('RABBITMQ_USERS_URL')],
-            queue: configService.getOrThrow<string>('RABBITMQ_USERS_QUEUE'),
+            urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
+            queue: 'USERS',
             queueOptions: {
                 durable: false,
             },

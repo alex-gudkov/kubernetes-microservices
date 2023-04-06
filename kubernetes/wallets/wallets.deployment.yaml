@@ -29,18 +29,8 @@ spec:
                         -   name: APP_PORT
                             value: "3003"
                         # RabbitMQ
-                        -   name: RABBITMQ_USERS_URL
+                        -   name: RABBITMQ_URL
                             value: "amqp://rabbitmq:5672"
-                        -   name: RABBITMQ_USERS_QUEUE
-                            value: "USERS"
-                        -   name: RABBITMQ_AUTH_URL
-                            value: "amqp://rabbitmq:5672"
-                        -   name: RABBITMQ_AUTH_QUEUE
-                            value: "AUTH"
-                        -   name: RABBITMQ_WALLETS_URL
-                            value: "amqp://rabbitmq:5672"
-                        -   name: RABBITMQ_WALLETS_QUEUE
-                            value: "WALLETS"
                         # PostgeSQL
                         -   name: POSTGRES_HOST
                             value: "postgres"
@@ -53,10 +43,12 @@ spec:
                         -   name: POSTGRES_DB
                             value: "kubernetes_microservices"
                     resources:
-                        limits:
+                        limits: 
                             memory: 512Mi
+                            ephemeral-storage: 1Gi
                             cpu: 250m
                         requests:
                             memory: 512Mi
+                            ephemeral-storage: 1Gi
                             cpu: 250m
             restartPolicy: Always

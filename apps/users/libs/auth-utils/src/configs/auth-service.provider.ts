@@ -8,8 +8,8 @@ export const authServiceProvider: FactoryProvider<ClientProxy & Closeable> = {
         const clientRmqOptions: RmqOptions = {
             transport: Transport.RMQ,
             options: {
-                urls: [configService.getOrThrow<string>('RABBITMQ_AUTH_URL')],
-                queue: configService.getOrThrow<string>('RABBITMQ_AUTH_QUEUE'),
+                urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
+                queue: 'AUTH',
                 queueOptions: {
                     durable: false,
                 },

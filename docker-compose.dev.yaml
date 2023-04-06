@@ -17,14 +17,12 @@ services:
             POSTGRES_USER: "postgres"
             POSTGRES_PASSWORD: "root"
             POSTGRES_DB: "kubernetes_microservices"
-            POSTGRES_INITDB_ARGS: "--data-checksums"
         volumes:
             - ./pg_data:/var/lib/postgresql
     rabbitmq:
         container_name: kubernetes_microservices_dev_rabbitmq
         image: rabbitmq:3.11.11
         ports:
-            - 15672:15672
             - 5672:5672
 volumes:
     pg_data:

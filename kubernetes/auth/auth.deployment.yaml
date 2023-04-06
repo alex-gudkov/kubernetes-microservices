@@ -29,22 +29,18 @@ spec:
                         -   name: APP_PORT
                             value: "3001"
                         # RabbitMQ
-                        -   name: RABBITMQ_USERS_URL
+                        -   name: RABBITMQ_URL
                             value: "amqp://rabbitmq:5672"
-                        -   name: RABBITMQ_USERS_QUEUE
-                            value: "USERS"
-                        -   name: RABBITMQ_AUTH_URL
-                            value: "amqp://rabbitmq:5672"
-                        -   name: RABBITMQ_AUTH_QUEUE
-                            value: "AUTH"
                         # Redis
                         -   name: REDIS_URL
                             value: "redis://redis:6379"
                     resources:
                         limits:
                             memory: 512Mi
+                            ephemeral-storage: 1Gi
                             cpu: 250m
                         requests:
                             memory: 512Mi
+                            ephemeral-storage: 1Gi
                             cpu: 250m
             restartPolicy: Always

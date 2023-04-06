@@ -1,6 +1,6 @@
 # Docker
 
-Docker:
+Basics:
 
 ```CMD
 > docker images
@@ -8,6 +8,9 @@ Docker:
 
 > docker ps [-a]
 > docker rm <container-id>
+
+> docker network ls
+> docker network rm
 
 > docker build ./ [--file <file-name>] [--tag <image-name>]
 > docker run <image-id>
@@ -46,11 +49,11 @@ Networks:
 > docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container-name>
 ```
 
-Removing data:
+Removing all data:
 
 ```CMD
 > docker image prune
 > docker volume prune
 > docker network prune
-> docker rm $(docker ps --filter status=exited -q)
+> docker container prune
 ```
