@@ -1,0 +1,5 @@
+gitops:
+    manifest_projects:
+        -   id: "alex-gudkov/kubernetes-microservices"
+            paths:
+                -   glob: "/**/*.{yaml,yml,json}"
