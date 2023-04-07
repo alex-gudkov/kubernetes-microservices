@@ -56,5 +56,5 @@ kubectl-test:
     script:
         -   kubectl -h
         -   kubectl config get-contexts
-        -   kubectl config use-context gke_positive-winter-382706_europe-west9_autopilot-cluster-1/test:primary-agent
+        -   kubectl config use-context alex-gudkov/kubernetes-microservices:primary-agent
         -   kubectl get pods
