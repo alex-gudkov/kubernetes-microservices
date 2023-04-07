@@ -1,24 +1,17 @@
 stages:
     -   build
-    -   test
-    -   deploy
 
-build-job:
+build:
     stage: build
+    image: 
+        name: "gcr.io/kaniko-project/executor:latest"
+        entrypoint:
+            -   ""
     script:
-        -   echo "Compiling the code..."
-        -   echo "Compile complete."
-
-unit-test-job:
-    stage: test
-    script:
-        -   echo "Running unit tests..."
-        -   sleep 10
-        -   echo "Tests complete."
-
-deploy-job:
-    stage: deploy
-    environment: production
-    script:
-        -   echo "Deploying application..."
-        -   echo "Application deployed."
+        -   mkdir -p /kaniko/.docker
+        -   echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json"
+        -   >-
+            /kaniko/executor
+            --context "${CI_PROJECT_DIR}/apps/auth"
+            --dockerfile "${CI_PROJECT_DIR}/apps/auth/Dockerfile"
+            --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}:latest"
