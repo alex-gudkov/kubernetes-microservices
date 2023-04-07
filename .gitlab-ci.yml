@@ -1,8 +1,9 @@
 stages:
-    -   build
+    -   build-auth
+    -   build-users
 
 build-auth:
-    stage: build
+    stage: build-auth
     image:
         name: gcr.io/kaniko-project/executor:v1.9.0-debug
         entrypoint:
@@ -15,7 +16,7 @@ build-auth:
                 --dockerfile "${CI_PROJECT_DIR}/apps/auth/Dockerfile"
                 --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}/auth:latest"
 build-users:
-    stage: build
+    stage: build-users
     image:
         name: gcr.io/kaniko-project/executor:v1.9.0-debug
         entrypoint:
