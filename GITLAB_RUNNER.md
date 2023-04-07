@@ -1,6 +1,6 @@
 # GitLab Runner
 
-Installation and set up:
+Installation GitLab Runner on Google Virtual Machine instance (Ubuntu 22.04):
 
 ```CMD
 > sudo curl -L --output /usr/local/bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
@@ -15,7 +15,7 @@ Installation and set up:
     --maintenance-note "" \
     --tag-list ""
 > sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
-> sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+> sudo gitlab-runner install --user=gitlab-runner --working-directory=/etc/gitlab-runner
 > sudo gitlab-runner start
 > sudo gitlab-runner run
 ```
