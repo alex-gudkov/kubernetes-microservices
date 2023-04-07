@@ -1,3 +1,4 @@
+
 stages:
     -   build-auth
     -   build-users
@@ -6,12 +7,16 @@ stages:
 build-auth:
     stage: build-auth
     image:
+        # debug image is recommended because it has shell
         name: gcr.io/kaniko-project/executor:v1.9.0-debug
+        # entrypoint needs to be overridden
         entrypoint:
             -   ""
     script:
+        # write kaniko config with needed credentials taken from predefined CI/CD variables 
         -   mkdir -p /kaniko/.docker
         -   echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+        # build image and push to project container registry 
         -   /kaniko/executor
                 --context "${CI_PROJECT_DIR}/apps/auth"
                 --dockerfile "${CI_PROJECT_DIR}/apps/auth/Dockerfile"

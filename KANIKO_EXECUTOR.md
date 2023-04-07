@@ -1,5 +1,12 @@
 # Kaniko Executor
 
+Kaniko – tool to build container images from Dockerfile inside a Docker container or Kubernetes cluster.
+
+Kaniko solves two Docker-in-Docker problems:
+
+* Docker-in-Docker requires privileged mode to function, which is significant security concern
+* Docker-in-Docker generally incurs a performance penalty and can be quite slow
+
 Kaniko Executor help:
 
 ```CMD
