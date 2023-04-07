@@ -1,9 +1,10 @@
 stages:
-    -   build-auth
-    -   build-users
+    -   prebuild
+    -   build
 
-build-auth:
-    stage: build-auth
+
+prebuild:
+    stage: prebuild
     image:
         name: gcr.io/kaniko-project/executor:v1.9.0-debug
         entrypoint:
@@ -11,19 +12,16 @@ build-auth:
     script:
         -   mkdir -p /kaniko/.docker
         -   echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+build-auth:
+    stage: build
+    script:
         -   /kaniko/executor
                 --context "${CI_PROJECT_DIR}/apps/auth"
                 --dockerfile "${CI_PROJECT_DIR}/apps/auth/Dockerfile"
                 --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}/auth:latest"
 build-users:
-    stage: build-users
-    image:
-        name: gcr.io/kaniko-project/executor:v1.9.0-debug
-        entrypoint:
-            -   ""
+    stage: build
     script:
-        -   mkdir -p /kaniko/.docker
-        -   echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
         -   /kaniko/executor
                 --context "${CI_PROJECT_DIR}/apps/users"
                 --dockerfile "${CI_PROJECT_DIR}/apps/users/Dockerfile"
