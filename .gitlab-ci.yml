@@ -1,8 +1,8 @@
-
 stages:
     -   build-auth
     -   build-users
     -   build-wallets
+    -   kubectl-test
 
 build-auth:
     stage: build-auth
@@ -47,3 +47,11 @@ build-wallets:
                 --context "${CI_PROJECT_DIR}/apps/wallets"
                 --dockerfile "${CI_PROJECT_DIR}/apps/wallets/Dockerfile"
                 --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}/wallets:latest"
+kubectl-test:
+    stage: kubectl-test
+    image:
+        name: bitnami/kubectl:latest
+        entrypoint:
+            -   ""
+    script:
+        -   kubectl -h
