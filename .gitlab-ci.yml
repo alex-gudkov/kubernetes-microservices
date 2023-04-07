@@ -4,10 +4,9 @@ stages:
 build:
     stage: build
     image: 
-        name: "gcr.io/kaniko-project/executor:latest"
+        name: gcr.io/kaniko-project/executor:latest
         entrypoint:
-            -   /bin/sh
-            -   -c
+            -   ""
     script:
         -   echo "build start"
         -   mkdir -p /kaniko/.docker
