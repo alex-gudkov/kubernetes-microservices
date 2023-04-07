@@ -13,4 +13,4 @@ build-auth:
         -   /kaniko/executor
                 --context "${CI_PROJECT_DIR}/apps/auth"
                 --dockerfile "${CI_PROJECT_DIR}/apps/auth/Dockerfile"
-                --destination "${CI_REGISTRY}/kubernetes-microservices-auth:latest"
+                --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}/auth:latest"
