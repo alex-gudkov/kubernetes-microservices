@@ -54,7 +54,7 @@ kubectl-test:
         entrypoint:
             -   ""
     script:
-        -   kubectl -h
         -   kubectl config get-contexts
         -   kubectl config use-context alex-gudkov/kubernetes-microservices:primary-agent
         -   kubectl get pods
+        -   ls
