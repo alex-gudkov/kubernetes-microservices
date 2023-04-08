@@ -13,6 +13,13 @@ import { SessionsService } from './sessions.service';
 export class AuthHttpController {
     constructor(private readonly authService: AuthService, private readonly sessionsService: SessionsService) {}
 
+    @Get('/test')
+    public getTest(): { message: string } {
+        return {
+            message: 'Auth microservice test!',
+        };
+    }
+
     @Post('/sign-up')
     public async signUpUser(
         @Body() signUpUserDto: SignUpUserDto,
