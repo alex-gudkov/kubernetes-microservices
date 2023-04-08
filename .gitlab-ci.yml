@@ -54,7 +54,15 @@ kubectl-test:
         entrypoint:
             -   ""
     script:
-        -   kubectl config get-contexts
         -   kubectl config use-context alex-gudkov/kubernetes-microservices:primary-agent
         -   kubectl get pods
-        -   ls
+        # apply
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/postgres"
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/redis"
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/rabbitmq"
+        # apply 
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/auth"
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/users"
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
+        # 
+        -   kubectl get pods
