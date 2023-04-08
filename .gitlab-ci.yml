@@ -7,7 +7,8 @@ stages:
 build-auth:
     stage: build-auth
     image:
-        # debug image is recommended because it has shell
+        # Kaniko builds images from Dockerfile inside containers
+        # use debug version because it has shell
         name: gcr.io/kaniko-project/executor:v1.9.0-debug
         # entrypoint needs to be overridden
         entrypoint:
@@ -50,20 +51,27 @@ build-wallets:
 deploy:
     stage: deploy
     image:
+        # use Kubernetes command-line tool image
         name: bitnami/kubectl:latest
         entrypoint:
             -   ""
     script:
+        # prepare
         -   kubectl config get-contexts
         -   kubectl config use-context alex-gudkov/kubernetes-microservices:primary-agent
         -   kubectl get pods
-        # apply
+        # apply using services 
         -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/postgres"
         -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/redis"
         -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/rabbitmq"
-        # apply 
-        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/auth"
-        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/users"
-        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
-        # 
+        # update auth pod
+        -   kubectl delete deployment auth
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/auth"
+        # update users pod
+        -   kubectl delete deployment users
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/users"
+        # update wallets pod
+        -   kubectl delete deployment wallets
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
+        # check status
         -   kubectl get pods
