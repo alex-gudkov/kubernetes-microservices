@@ -19,7 +19,7 @@ spec:
         spec:
             containers:
                 -   name: users
-                    image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/users
+                    image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/users:latest
                     imagePullPolicy: Always
                     ports:
                         -   name: port-users
