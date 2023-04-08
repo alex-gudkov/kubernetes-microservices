@@ -19,7 +19,7 @@ spec:
         spec:
             containers:
                 -   name: wallets
-                    image: alexgudkov/kubernetes-microservices-wallets
+                    image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/wallets
                     imagePullPolicy: IfNotPresent
                     ports:
                         -   name: port-wallets
