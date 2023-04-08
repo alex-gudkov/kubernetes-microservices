@@ -7,11 +7,9 @@ metadata:
         app.kubernetes.io/component: auth
 spec:
     rules:
-        # use valid DNS name that resolves to the load balancer external ip
-        -   host: "rm-corporate.ru"
-            http:
+        -   http:
                 paths:
-                    -   path: "/"
+                    -   path: /auth
                         pathType: Prefix
                         backend:
                             service:
