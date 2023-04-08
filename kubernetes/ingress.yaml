@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: auth
+    labels:
+        app.kubernetes.io/name: kubernetes-microservices
+        app.kubernetes.io/component: auth
+spec:
+    rules:
+        -   http:
+                paths:
+                    -   path: /auth
+                        pathType: Prefix
+                        backend:
+                            service:
+                                name: auth
+                                port:
+                                    name: port-auth
+                    -   path: /users
+                        pathType: Prefix
+                        backend:
+                            service:
+                                name: users
+                                port:
+                                    name: port-users
+                    -   path: /wallets
+                        pathType: Prefix
+                        backend:
+                            service:
+                                name: wallets
+                                port:
+                                    name: port-wallets
