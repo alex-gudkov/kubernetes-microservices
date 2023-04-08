@@ -20,7 +20,7 @@ spec:
             containers:
                 -   name: auth
                     image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/auth
-                    imagePullPolicy: IfNotPresent
+                    imagePullPolicy: Always
                     ports:
                         -   name: port-auth
                             containerPort: 3001

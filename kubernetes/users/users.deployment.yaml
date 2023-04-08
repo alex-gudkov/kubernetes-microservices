@@ -20,7 +20,7 @@ spec:
             containers:
                 -   name: users
                     image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/users
-                    imagePullPolicy: IfNotPresent
+                    imagePullPolicy: Always
                     ports:
                         -   name: port-users
                             containerPort: 3002

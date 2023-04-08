@@ -20,7 +20,7 @@ spec:
             containers:
                 -   name: wallets
                     image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/wallets
-                    imagePullPolicy: IfNotPresent
+                    imagePullPolicy: Always
                     ports:
                         -   name: port-wallets
                             containerPort: 3003
