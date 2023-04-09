@@ -9,24 +9,24 @@ spec:
     rules:
         -   http:
                 paths:
-                    -   path: /auth
+                    -   path: /m1
                         pathType: Prefix
                         backend:
                             service:
                                 name: auth
                                 port:
                                     name: port-auth
-                    -   path: /users
+                    -   path: /m2
                         pathType: Prefix
                         backend:
                             service:
                                 name: users
                                 port:
                                     name: port-users
-                    -   path: /wallets
+                    -   path: /m3
                         pathType: Prefix
                         backend:
                             service:
                                 name: wallets
                                 port:
-                                    name: port-wallets
+                                    name: port-wallets  

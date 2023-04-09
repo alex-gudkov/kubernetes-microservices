@@ -4,6 +4,12 @@ stages:
     -   build-wallets
     -   deploy
 
+# definition of GitLab CI/CD workflow
+workflow:
+    # define the set of rules when the pipeline should run
+    rules:
+        -   if: ${CI_COMMIT_BRANCH} == "main" || (${CI_PIPELINE_SOURCE} == 'merge_request_event' && (${CI_MERGE_REQUEST_TARGET_BRANCH_NAME} == "main" || ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME} == "main"))
+
 build-auth:
     stage: build-auth
     image:
