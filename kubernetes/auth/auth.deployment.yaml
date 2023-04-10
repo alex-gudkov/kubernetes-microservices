@@ -36,15 +36,15 @@ spec:
                     resources:
                         requests:
                             # amount of RAM for executing processes
-                            memory: 512Mi
+                            memory: 2Gi
                             # amount of storage used for caching, buffering, temporary files allocation
                             ephemeral-storage: 1Gi
                             # amount of given computing power
-                            cpu: 250m
+                            cpu: 500m
                         limits:
-                            memory: 512Mi
+                            memory: 2Gi
                             ephemeral-storage: 1Gi
-                            cpu: 250m
+                            cpu: 500m
             imagePullSecrets:
                 -   name: regcred
             restartPolicy: Always
