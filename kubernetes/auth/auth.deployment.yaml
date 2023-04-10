@@ -22,8 +22,7 @@ spec:
                     image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/auth:latest
                     imagePullPolicy: Always
                     ports:
-                        -   name: port-auth
-                            containerPort: 3001
+                        -   containerPort: 3001
                     env:
                         # application
                         -   name: APP_PORT
@@ -35,11 +34,14 @@ spec:
                         -   name: REDIS_URL
                             value: "redis://redis:6379"
                     resources:
-                        limits:
-                            memory: 512Mi
-                            ephemeral-storage: 1Gi
-                            cpu: 250m
                         requests:
+                            # amount of RAM for executing processes
+                            memory: 512Mi
+                            # amount of storage used for caching, buffering, temporary files allocation
+                            ephemeral-storage: 1Gi
+                            # amount of given computing power
+                            cpu: 250m
+                        limits:
                             memory: 512Mi
                             ephemeral-storage: 1Gi
                             cpu: 250m
