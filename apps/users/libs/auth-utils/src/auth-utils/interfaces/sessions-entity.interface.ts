@@ -1,4 +1,4 @@
 export interface SessionsEntity {
-    id: string;
-    userId: number;
+  id: string;
+  userId: number;
 }

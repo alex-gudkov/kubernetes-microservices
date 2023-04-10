@@ -7,24 +7,24 @@ import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-    const app = await NestFactory.create<INestApplication>(AppModule);
-    const configService = app.get<ConfigService>(ConfigService);
-    const port = parseInt(configService.getOrThrow<string>('APP_PORT'), 10);
-    const microservice = app.connectMicroservice<MicroserviceOptions>({
-        transport: Transport.RMQ,
-        options: {
-            urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
-            queue: 'USERS',
-            queueOptions: {
-                durable: false,
-            },
-        },
-    });
+  const app = await NestFactory.create<INestApplication>(AppModule);
+  const configService = app.get<ConfigService>(ConfigService);
+  const port = parseInt(configService.getOrThrow<string>('APP_PORT'), 10);
+  const microservice = app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
+      queue: 'USERS',
+      queueOptions: {
+        durable: false,
+      },
+    },
+  });
 
-    app.use(cookieParser());
+  app.use(cookieParser());
 
-    await app.startAllMicroservices();
-    await app.listen(port);
+  await app.startAllMicroservices();
+  await app.listen(port);
 }
 
 bootstrap();

@@ -5,25 +5,25 @@ import { AuthService } from './auth.service';
 import { SessionsService } from './sessions.service';
 
 describe('AuthHttpController', () => {
-    let authHttpController: AuthHttpController;
-    const mockAuthService = {};
-    const mockSessionsService = {};
+  let authHttpController: AuthHttpController;
+  const mockAuthService = {};
+  const mockSessionsService = {};
 
-    beforeAll(async () => {
-        const testingModule: TestingModule = await Test.createTestingModule({
-            controllers: [AuthHttpController],
-            providers: [AuthService, SessionsService],
-        })
-            .overrideProvider(AuthService)
-            .useValue(mockAuthService)
-            .overrideProvider(SessionsService)
-            .useValue(mockSessionsService)
-            .compile();
+  beforeAll(async () => {
+    const testingModule: TestingModule = await Test.createTestingModule({
+      controllers: [AuthHttpController],
+      providers: [AuthService, SessionsService],
+    })
+      .overrideProvider(AuthService)
+      .useValue(mockAuthService)
+      .overrideProvider(SessionsService)
+      .useValue(mockSessionsService)
+      .compile();
 
-        authHttpController = testingModule.get<AuthHttpController>(AuthHttpController);
-    });
+    authHttpController = testingModule.get<AuthHttpController>(AuthHttpController);
+  });
 
-    it('should be defined', () => {
-        expect(authHttpController).toBeDefined();
-    });
+  it('should be defined', () => {
+    expect(authHttpController).toBeDefined();
+  });
 });

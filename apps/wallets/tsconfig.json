@@ -1,31 +1,31 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "declaration": false,
-        "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "target": "ES2017",
-        "sourceMap": true,
-        "outDir": "./dist",
-        "baseUrl": "./",
-        "incremental": true,
-        "skipLibCheck": true,
-        "noImplicitAny": false,
-        "noFallthroughCasesInSwitch": true,
-        "forceConsistentCasingInFileNames": true,
-        "strictNullChecks": true,
-        "strict": true,
-        "strictBindCallApply": true,
-        "strictPropertyInitialization": false,
-        "paths": {
-            "@libs/auth-utils": [
-                "./libs/auth-utils/src"
-            ],
-            "@libs/auth-utils/*": [
-                "./libs/auth-utils/src/*"
-            ],
-        }
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@libs/auth-utils": [
+        "./libs/auth-utils/src"
+      ],
+      "@libs/auth-utils/*": [
+        "./libs/auth-utils/src/*"
+      ],
     }
+  }
 }

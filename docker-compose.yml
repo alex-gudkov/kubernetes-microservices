@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: kubernetes_microservices_redis
+    image: redis:7.0.10
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - kubernetes_microservices_network
+  postgres:
+    container_name: kubernetes_microservices_postgres
+    image: postgres:15.2
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "kubernetes_microservices"
+    volumes:
+      - ./pg_data:/var/lib/postgresql
+    networks:
+      - kubernetes_microservices_network
+  rabbitmq:
+    container_name: kubernetes_microservices_rabbitmq
+    image: rabbitmq:3.11.11
+    ports:
+      - 5672:5672
+    networks:
+      - kubernetes_microservices_network
+  auth:
+    container_name: kubernetes_microservices_auth
+    environment:
+      # application
+      APP_PORT: 3001
+      # RabbitMQ
+      RABBITMQ_URL: "amqp://rabbitmq:5672"
+      # Redis
+      REDIS_URL: "redis://redis:6379"
+    ports:
+      - 3001:3001
+    depends_on:
+      - rabbitmq
+      - redis
+    build:
+      context: ./apps/auth
+      dockerfile: Dockerfile
+    networks:
+      - kubernetes_microservices_network
+  users:
+    container_name: kubernetes_microservices_users
+    environment:
+      # application
+      APP_PORT: 3002
+      # RabbitMQ
+      RABBITMQ_URL: "amqp://rabbitmq:5672"
+      # PostgeSQL
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "kubernetes_microservices"
+    ports:
+      - 3002:3002
+    depends_on:
+      - rabbitmq
+      - postgres
+    build:
+      context: ./apps/users
+      dockerfile: Dockerfile
+    networks:
+      - kubernetes_microservices_network
+  wallets:
+    container_name: kubernetes_microservices_wallets
+    environment:
+      # application
+      APP_PORT: 3003
+      # RabbitMQ
+      RABBITMQ_URL: "amqp://rabbitmq:5672"
+      # PostgeSQL
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "kubernetes_microservices"
+    ports:
+      - 3003:3003
+    depends_on:
+      - rabbitmq
+      - postgres
+    build:
+      context: ./apps/wallets
+      dockerfile: Dockerfile
+    networks:
+      - kubernetes_microservices_network
+
+volumes:
+  pg_data:
+  redis_data:
+
+
+networks:
+  kubernetes_microservices_network:
+    external: true

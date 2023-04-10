@@ -7,30 +7,30 @@ import { UsersEntity } from './interfaces/users-entity.interface';
 
 @Injectable()
 export class SessionsService {
-    constructor(@InjectRedis() private readonly redisRepository: Redis) {}
+  constructor(@InjectRedis() private readonly redisRepository: Redis) {}
 
-    public async createSession(user: UsersEntity): Promise<SessionsEntity> {
-        const userSession: SessionsEntity = {
-            id: uuid.v4(),
-            userId: user.id,
-        };
-        const sessionsEntityString = JSON.stringify(userSession);
-        const sessionTtlInSeconds = 7 * 24 * 60 * 60;
+  public async createSession(user: UsersEntity): Promise<SessionsEntity> {
+    const userSession: SessionsEntity = {
+      id: uuid.v4(),
+      userId: user.id,
+    };
+    const sessionsEntityString = JSON.stringify(userSession);
+    const sessionTtlInSeconds = 7 * 24 * 60 * 60;
 
-        await this.redisRepository.set(userSession.id, sessionsEntityString, 'EX', sessionTtlInSeconds);
+    await this.redisRepository.set(userSession.id, sessionsEntityString, 'EX', sessionTtlInSeconds);
 
-        return userSession;
+    return userSession;
+  }
+
+  public async findSessionById(sessionId: string): Promise<SessionsEntity | null> {
+    const sessionsEntityString = await this.redisRepository.get(sessionId);
+
+    if (!sessionsEntityString) {
+      return null;
     }
 
-    public async findSessionById(sessionId: string): Promise<SessionsEntity | null> {
-        const sessionsEntityString = await this.redisRepository.get(sessionId);
+    const userSession: SessionsEntity = JSON.parse(sessionsEntityString);
 
-        if (!sessionsEntityString) {
-            return null;
-        }
-
-        const userSession: SessionsEntity = JSON.parse(sessionsEntityString);
-
-        return userSession;
-    }
+    return userSession;
+  }
 }

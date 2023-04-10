@@ -8,21 +8,21 @@ import { WalletsHttpController } from './wallets/wallets.http.controller';
 import { WalletModule } from './wallets/wallets.module';
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({
-            envFilePath: './.env',
-            isGlobal: true,
-        }),
-        TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
-        WalletModule,
-        AuthUtilsModule,
-    ],
-    controllers: [],
-    providers: [],
-    exports: [],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: './.env',
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    WalletModule,
+    AuthUtilsModule,
+  ],
+  controllers: [],
+  providers: [],
+  exports: [],
 })
 export class AppModule {
-    public configure(middlewareConsumer: MiddlewareConsumer): void {
-        middlewareConsumer.apply(AuthMiddleware).forRoutes(WalletsHttpController);
-    }
+  public configure(middlewareConsumer: MiddlewareConsumer): void {
+    middlewareConsumer.apply(AuthMiddleware).forRoutes(WalletsHttpController);
+  }
 }

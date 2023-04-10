@@ -11,48 +11,51 @@ import { SessionsService } from './sessions.service';
 
 @Controller('/auth')
 export class AuthHttpController {
-    constructor(private readonly authService: AuthService, private readonly sessionsService: SessionsService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly sessionsService: SessionsService,
+  ) {}
 
-    @Get('/test')
-    public getTest(): { message: string } {
-        return {
-            message: 'Auth microservice test!',
-        };
-    }
+  @Get('/test')
+  public getTest(): { message: string } {
+    return {
+      message: 'Auth microservice test!',
+    };
+  }
 
-    @Post('/sign-up')
-    public async signUpUser(
-        @Body() signUpUserDto: SignUpUserDto,
-        @Res({ passthrough: true }) response: Response,
-    ): Promise<UsersEntity> {
-        const user = await this.authService.signUpUser(signUpUserDto);
-        const session = await this.sessionsService.createSession(user);
+  @Post('/sign-up')
+  public async signUpUser(
+    @Body() signUpUserDto: SignUpUserDto,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<UsersEntity> {
+    const user = await this.authService.signUpUser(signUpUserDto);
+    const session = await this.sessionsService.createSession(user);
 
-        response.cookie('SESSION_ID', session.id, {
-            httpOnly: true,
-        });
+    response.cookie('SESSION_ID', session.id, {
+      httpOnly: true,
+    });
 
-        return user;
-    }
+    return user;
+  }
 
-    @Post('/sign-in')
-    public async signInUser(
-        @Body() signInUserDto: SignInUserDto,
-        @Res({ passthrough: true }) response: Response,
-    ): Promise<UsersEntity> {
-        const user = await this.authService.signInUser(signInUserDto);
-        const session = await this.sessionsService.createSession(user);
+  @Post('/sign-in')
+  public async signInUser(
+    @Body() signInUserDto: SignInUserDto,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<UsersEntity> {
+    const user = await this.authService.signInUser(signInUserDto);
+    const session = await this.sessionsService.createSession(user);
 
-        response.cookie('SESSION_ID', session.id, {
-            httpOnly: true,
-        });
+    response.cookie('SESSION_ID', session.id, {
+      httpOnly: true,
+    });
 
-        return user;
-    }
+    return user;
+  }
 
-    @Get('/sessions/:sessionId')
-    @UseGuards(AuthGuard)
-    public findSessionById(@Param('sessionId') sessionId: string): Promise<SessionsEntity | null> {
-        return this.sessionsService.findSessionById(sessionId);
-    }
+  @Get('/sessions/:sessionId')
+  @UseGuards(AuthGuard)
+  public findSessionById(@Param('sessionId') sessionId: string): Promise<SessionsEntity | null> {
+    return this.sessionsService.findSessionById(sessionId);
+  }
 }

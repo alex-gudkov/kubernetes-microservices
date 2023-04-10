@@ -12,11 +12,11 @@ Login process creates or updates config.json that holds an authorization token:
 
 ```JSON
 {
-    "auths": {
-            "registry.gitlab.com": {
-                    "auth": "<docker-password>"
-            }
-    },
+  "auths": {
+    "registry.gitlab.com": {
+      "auth": "<docker-password>"
+    }
+  },
 }
 ```
 
@@ -35,9 +35,9 @@ secret/regcred created
 
 Add configuration in file which uses private image:
 
-```YAML
+```YML
 containers:
-    -   image: <your-private-image>
+  - image: <your-private-image>
 imagePullSecrets:
-    -   name: regcred
+   - name: regcred
 ```

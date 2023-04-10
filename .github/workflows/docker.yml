@@ -1,0 +1,57 @@
+name: Docker
+run-name: docker
+on:
+  push:
+    branches:
+      - main
+      - dev
+jobs:
+  auth-microservice:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/auth
+    strategy:
+      matrix:
+        node-version:
+          - 18.x
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker build
+        run: docker build ./ --file ./Dockerfile --tag kubernetes-microservices-auth
+  users-microservice:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/users
+    strategy:
+      matrix:
+        node-version:
+          - 18.x
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker build
+        run: docker build ./ --file ./Dockerfile --tag kubernetes-microservices-users
+  wallets-microservice:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/wallets
+    strategy:
+      matrix:
+        node-version:
+          - 18.x
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker build
+        run: docker build ./ --file ./Dockerfile --tag kubernetes-microservices-wallets
+  all-microservices:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build Docker Compose
+        run: docker-compose --file ./docker-compose.yml build

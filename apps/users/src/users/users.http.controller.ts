@@ -6,18 +6,18 @@ import { UsersService } from './users.service';
 
 @Controller('/users')
 export class UsersHttpController {
-    constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
-    @Get('/test')
-    public getTest(): { message: string } {
-        return {
-            message: 'Users microservice test!',
-        };
-    }
+  @Get('/test')
+  public getTest(): { message: string } {
+    return {
+      message: 'Users microservice test!',
+    };
+  }
 
-    @Get('/')
-    @UseGuards(AuthGuard)
-    public findAllUsers(): Promise<UsersEntity[]> | void {
-        return this.usersService.findAllUsers();
-    }
+  @Get('/')
+  @UseGuards(AuthGuard)
+  public findAllUsers(): Promise<UsersEntity[]> | void {
+    return this.usersService.findAllUsers();
+  }
 }
