@@ -1,6 +1,12 @@
 import { FactoryProvider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { RmqOptions, Transport, ClientProxyFactory, ClientProxy, Closeable } from '@nestjs/microservices';
+import {
+  RmqOptions,
+  Transport,
+  ClientProxyFactory,
+  ClientProxy,
+  Closeable,
+} from '@nestjs/microservices';
 
 export const authServiceProvider: FactoryProvider<ClientProxy & Closeable> = {
   provide: 'AUTH_SERVICE',

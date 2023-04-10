@@ -1,6 +1,7 @@
 {
   "env": {
-    "node": true
+    "node": true,
+    "jest": true
   },
   "root": true,
   "extends": [
@@ -78,9 +79,25 @@
     "no-empty-pattern": "warn",
     "no-return-await": "warn",
     "no-trailing-spaces": "warn",
+    "max-len": [
+      "warn",
+      {
+        "code": 100,
+        "ignoreTemplateLiterals": true,
+        "ignorePattern": "^import\\s.+\\sfrom\\s.+;$",
+        "ignoreUrls": true,
+        "ignoreComments": true
+      }
+    ],
     "require-await": "warn",
     "object-shorthand": "warn",
-    "lines-between-class-members": "off",
+    "lines-between-class-members": [
+      "warn",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ],
     "padding-line-between-statements": [
       "warn",
       {

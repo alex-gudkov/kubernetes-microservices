@@ -11,7 +11,10 @@ import { SessionsService } from './sessions.service';
 
 @Controller('/auth')
 export class AuthHttpController {
-  constructor(private readonly authService: AuthService, private readonly sessionsService: SessionsService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly sessionsService: SessionsService,
+  ) {}
 
   @Get('/test')
   public getTest(): { message: string } {

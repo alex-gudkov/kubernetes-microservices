@@ -16,7 +16,10 @@ export class AuthService {
       userLogin: signUpUserDto.login,
     };
     const candidateUser = await firstValueFrom(
-      this.usersServiceClientProxy.send<Promise<UsersEntity>>(findUserByLoginPattern, findUserByLoginPayload),
+      this.usersServiceClientProxy.send<Promise<UsersEntity>>(
+        findUserByLoginPattern,
+        findUserByLoginPayload,
+      ),
     );
 
     if (candidateUser) {
@@ -40,7 +43,9 @@ export class AuthService {
     const payload = {
       userLogin: signInUserDto.login,
     };
-    const user = await firstValueFrom(this.usersServiceClientProxy.send<Promise<UsersEntity>>(pattern, payload));
+    const user = await firstValueFrom(
+      this.usersServiceClientProxy.send<Promise<UsersEntity>>(pattern, payload),
+    );
 
     if (!user) {
       throw new BadRequestException('User not registered.');
