@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: redis
-    labels:
-        app.kubernetes.io/name: kubernetes-microservices
-        app.kubernetes.io/component: redis
+  name: redis
+  labels:
+    app.kubernetes.io/name: kubernetes-microservices
+    app.kubernetes.io/component: redis
 spec:
-    type: ClusterIP
-    selector: 
-        app.kubernetes.io/name: kubernetes-microservices
-        app.kubernetes.io/component: redis
-    ports:
-        -   name: port-redis
-            protocol: TCP
-            port: 6379
-            targetPort: port-redis
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: kubernetes-microservices
+    app.kubernetes.io/component: redis
+  ports:
+    - name: port-redis
+      protocol: TCP
+      port: 6379
+      targetPort: port-redis

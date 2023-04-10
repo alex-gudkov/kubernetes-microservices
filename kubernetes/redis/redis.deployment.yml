@@ -1,43 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: redis
-    labels:
+  name: redis
+  labels:
+    app.kubernetes.io/name: kubernetes-microservices
+    app.kubernetes.io/component: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubernetes-microservices
+      app.kubernetes.io/component: redis
+  template:
+    metadata:
+      labels:
         app.kubernetes.io/name: kubernetes-microservices
         app.kubernetes.io/component: redis
-spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app.kubernetes.io/name: kubernetes-microservices
-            app.kubernetes.io/component: redis
-    template:
-        metadata:
-            labels:
-                app.kubernetes.io/name: kubernetes-microservices
-                app.kubernetes.io/component: redis
-        spec:
-            containers:
-                -   name: redis
-                    image: redis:7.0.10
-                    imagePullPolicy: IfNotPresent
-                    ports:
-                        -   name: port-redis
-                            containerPort: 6379
-                    resources:
-                        limits:
-                            memory: 2Gi
-                            ephemeral-storage: 1Gi
-                            cpu: 500m
-                        requests:
-                            memory: 2Gi
-                            ephemeral-storage: 1Gi
-                            cpu: 500m
-                    volumeMounts:
-                      -     name: redis-data
-                            mountPath: /data
-            volumes:
-                -   name: redis-data
-                    persistentVolumeClaim:
-                        claimName: redis-pvc
-            restartPolicy: Always
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.0.10
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: port-redis
+              containerPort: 6379
+          resources:
+            limits:
+              memory: 2Gi
+              ephemeral-storage: 1Gi
+              cpu: 500m
+            requests:
+              memory: 2Gi
+              ephemeral-storage: 1Gi
+              cpu: 500m
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-pvc
+      restartPolicy: Always

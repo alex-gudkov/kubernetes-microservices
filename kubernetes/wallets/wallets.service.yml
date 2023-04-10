@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: wallets
-    labels:
-        app.kubernetes.io/name: kubernetes-microservices
-        app.kubernetes.io/component: wallets
+  name: wallets
+  labels:
+    app.kubernetes.io/name: kubernetes-microservices
+    app.kubernetes.io/component: wallets
 spec:
-    type: ClusterIP
-    selector: 
-        app.kubernetes.io/name: kubernetes-microservices
-        app.kubernetes.io/component: wallets
-    ports:
-        -   protocol: TCP
-            port: 3003
-            targetPort: 3003
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: kubernetes-microservices
+    app.kubernetes.io/component: wallets
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003
