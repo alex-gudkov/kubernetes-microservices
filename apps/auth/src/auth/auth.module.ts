@@ -9,9 +9,9 @@ import { SessionsService } from './sessions.service';
 import { SessionsTcpController } from './sessions.tcp.controller';
 
 @Module({
-    imports: [RedisModule.forRootAsync({ useClass: RedisConfigService })],
-    controllers: [AuthHttpController, SessionsTcpController],
-    providers: [AuthService, SessionsService, usersServiceProvider],
-    exports: [],
+  imports: [RedisModule.forRootAsync({ useClass: RedisConfigService })],
+  controllers: [AuthHttpController, SessionsTcpController],
+  providers: [AuthService, SessionsService, usersServiceProvider],
+  exports: [],
 })
 export class AuthModule {}

@@ -8,44 +8,44 @@ import { UsersEntity } from './interfaces/users-entity.interface';
 
 @Injectable()
 export class AuthService {
-    constructor(@Inject('USERS_SERVICE') private readonly usersServiceClientProxy: ClientProxy) {}
+  constructor(@Inject('USERS_SERVICE') private readonly usersServiceClientProxy: ClientProxy) {}
 
-    public async signUpUser(signUpUserDto: SignUpUserDto) {
-        const findUserByLoginPattern = 'FIND_USER_BY_LOGIN';
-        const findUserByLoginPayload = {
-            userLogin: signUpUserDto.login,
-        };
-        const candidateUser = await firstValueFrom(
-            this.usersServiceClientProxy.send<Promise<UsersEntity>>(findUserByLoginPattern, findUserByLoginPayload),
-        );
+  public async signUpUser(signUpUserDto: SignUpUserDto) {
+    const findUserByLoginPattern = 'FIND_USER_BY_LOGIN';
+    const findUserByLoginPayload = {
+      userLogin: signUpUserDto.login,
+    };
+    const candidateUser = await firstValueFrom(
+      this.usersServiceClientProxy.send<Promise<UsersEntity>>(findUserByLoginPattern, findUserByLoginPayload),
+    );
 
-        if (candidateUser) {
-            throw new BadRequestException('User already exist.');
-        }
-
-        const createUserPattern = 'CREATE_USER';
-        const createUserPayload = {
-            userLogin: signUpUserDto.login,
-            userPassword: signUpUserDto.password,
-        };
-        const user = await firstValueFrom(
-            this.usersServiceClientProxy.send<Promise<UsersEntity>>(createUserPattern, createUserPayload),
-        );
-
-        return user;
+    if (candidateUser) {
+      throw new BadRequestException('User already exist.');
     }
 
-    public async signInUser(signInUserDto: SignInUserDto): Promise<UsersEntity> {
-        const pattern = 'FIND_USER_BY_LOGIN';
-        const payload = {
-            userLogin: signInUserDto.login,
-        };
-        const user = await firstValueFrom(this.usersServiceClientProxy.send<Promise<UsersEntity>>(pattern, payload));
+    const createUserPattern = 'CREATE_USER';
+    const createUserPayload = {
+      userLogin: signUpUserDto.login,
+      userPassword: signUpUserDto.password,
+    };
+    const user = await firstValueFrom(
+      this.usersServiceClientProxy.send<Promise<UsersEntity>>(createUserPattern, createUserPayload),
+    );
 
-        if (!user) {
-            throw new BadRequestException('User not registered.');
-        }
+    return user;
+  }
 
-        return user;
+  public async signInUser(signInUserDto: SignInUserDto): Promise<UsersEntity> {
+    const pattern = 'FIND_USER_BY_LOGIN';
+    const payload = {
+      userLogin: signInUserDto.login,
+    };
+    const user = await firstValueFrom(this.usersServiceClientProxy.send<Promise<UsersEntity>>(pattern, payload));
+
+    if (!user) {
+      throw new BadRequestException('User not registered.');
     }
+
+    return user;
+  }
 }

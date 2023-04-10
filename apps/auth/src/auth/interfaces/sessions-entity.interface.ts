@@ -1,4 +1,4 @@
 export interface SessionsEntity {
-    readonly id: string;
-    readonly userId: number;
+  readonly id: string;
+  readonly userId: number;
 }
