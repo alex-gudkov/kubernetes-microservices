@@ -69,7 +69,7 @@ deploy:
     - kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/auth"
     - kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/users"
     - kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
-    - kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yaml"
+    - kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yml"
     # update using services
     - kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/postgres"
     - kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/redis"
@@ -78,7 +78,7 @@ deploy:
     - kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/auth"
     - kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/users"
     - kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
-    - kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yaml"
+    - kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yml"
     # check status
     - kubectl get pods
     - kubectl get services

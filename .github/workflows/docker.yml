@@ -54,4 +54,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build Docker Compose
-        run: docker-compose --file ./docker-compose.yaml build
+        run: docker-compose --file ./docker-compose.yml build

@@ -17,7 +17,7 @@ You can watch the status by running 'kubectl --namespace default get services -o
 
 An example Ingress that makes use of the controller:
 
-```YAML
+```YML
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -45,7 +45,7 @@ spec:
 
 If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
 
-```YAML
+```YML
 apiVersion: v1
 kind: Secret
 metadata:
