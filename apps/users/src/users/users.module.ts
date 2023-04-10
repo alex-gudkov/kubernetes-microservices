@@ -7,9 +7,9 @@ import { UsersService } from './users.service';
 import { UsersTcpController } from './users.tcp.controller';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UsersEntity])],
-    controllers: [UsersHttpController, UsersTcpController],
-    providers: [UsersService],
-    exports: [],
+  imports: [TypeOrmModule.forFeature([UsersEntity])],
+  controllers: [UsersHttpController, UsersTcpController],
+  providers: [UsersService],
+  exports: [],
 })
 export class UsersModule {}

@@ -7,42 +7,44 @@ import { UsersEntity } from './entities/users.entity';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(UsersEntity) private readonly usersRepository: Repository<UsersEntity>) {}
+  constructor(
+    @InjectRepository(UsersEntity) private readonly usersRepository: Repository<UsersEntity>,
+  ) {}
 
-    public createUser(createUserDto: CreateUserDto): Promise<UsersEntity> {
-        const user = this.usersRepository.create({
-            login: createUserDto.login,
-            password: createUserDto.password,
-        });
+  public createUser(createUserDto: CreateUserDto): Promise<UsersEntity> {
+    const user = this.usersRepository.create({
+      login: createUserDto.login,
+      password: createUserDto.password,
+    });
 
-        return this.usersRepository.save(user);
-    }
+    return this.usersRepository.save(user);
+  }
 
-    public findAllUsers(): Promise<UsersEntity[]> {
-        return this.usersRepository.find({});
-    }
+  public findAllUsers(): Promise<UsersEntity[]> {
+    return this.usersRepository.find({});
+  }
 
-    public findUserById(userId: number): Promise<UsersEntity | null> {
-        return this.usersRepository.findOne({
-            where: {
-                id: userId,
-            },
-        });
-    }
+  public findUserById(userId: number): Promise<UsersEntity | null> {
+    return this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+    });
+  }
 
-    public findUserByLogin(userLogin: string): Promise<UsersEntity | null> {
-        return this.usersRepository.findOne({
-            where: {
-                login: userLogin,
-            },
-        });
-    }
+  public findUserByLogin(userLogin: string): Promise<UsersEntity | null> {
+    return this.usersRepository.findOne({
+      where: {
+        login: userLogin,
+      },
+    });
+  }
 
-    public isUserExistByLogin(userLogin: string): Promise<boolean> {
-        return this.usersRepository.exist({
-            where: {
-                login: userLogin,
-            },
-        });
-    }
+  public isUserExistByLogin(userLogin: string): Promise<boolean> {
+    return this.usersRepository.exist({
+      where: {
+        login: userLogin,
+      },
+    });
+  }
 }
