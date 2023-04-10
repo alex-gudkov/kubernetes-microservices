@@ -19,11 +19,10 @@ spec:
         spec:
             containers:
                 -   name: users
-                    image: alexgudkov/kubernetes-microservices-users
-                    imagePullPolicy: IfNotPresent
+                    image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/users:latest
+                    imagePullPolicy: Always
                     ports:
-                        -   name: port-users
-                            containerPort: 3002
+                        -   containerPort: 3002
                     env:
                         # application
                         -   name: APP_PORT
@@ -51,4 +50,6 @@ spec:
                             memory: 512Mi
                             ephemeral-storage: 1Gi
                             cpu: 250m
+            imagePullSecrets:
+                -   name: regcred
             restartPolicy: Always

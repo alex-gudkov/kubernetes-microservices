@@ -1,6 +1,6 @@
-# Nginx-Ingress
+# Ingress-Nginx
 
-Install Ingress-Nginx controller using Helm:
+Install Ingress-Nginx ingress controller using Helm:
 
 ```CMD
 > helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -55,4 +55,13 @@ data:
   tls.crt: <base64 encoded cert>
   tls.key: <base64 encoded key>
 type: kubernetes.io/tls
+```
+
+Managing the ingress:
+
+```CMD
+> kubectl create --filename <ingress-file>
+> kubectl get ingress
+> kubectl describe ingress <ingress-name>
+> kubectl delete ingress <ingress-name>
 ```

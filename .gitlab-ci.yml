@@ -1,39 +1,85 @@
-# List of stages for jobs, and their order of execution
 stages:
-    -   build
-    -   test
+    -   build-auth
+    -   build-users
+    -   build-wallets
     -   deploy
 
-# This job runs in the build stage, which runs first.
-build-job:
-    stage: build
-    script:
-        -   echo "Compiling the code..."
-        -   echo "Compile complete."
+# definition of GitLab CI/CD workflow
+workflow:
+    # define the set of rules when the pipeline should run
+    rules:
+        -   if: $CI_COMMIT_BRANCH == "main" || ($CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main")
 
-# This job runs in the test stage.
-unit-test-job:
-    # It only starts when the job in the build stage completes successfully.
-    stage: test
+build-auth:
+    stage: build-auth
+    image:
+        # Kaniko builds images from Dockerfile inside containers
+        # use debug version because it has shell
+        name: gcr.io/kaniko-project/executor:v1.9.0-debug
+        # entrypoint needs to be overridden
+        entrypoint:
+            -   ""
     script:
-        -   echo "Running unit tests..."
-        -   sleep 30
-        -   echo "Tests complete."
-
-# This job also runs in the test stage.
-lint-test-job:
-    # It can run at the same time as unit-test-job (in parallel).
-    stage: test
+        # write kaniko config with needed credentials taken from predefined CI/CD variables 
+        -   mkdir -p /kaniko/.docker
+        -   echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+        # build image and push to project container registry 
+        -   /kaniko/executor
+                --context "${CI_PROJECT_DIR}/apps/auth"
+                --dockerfile "${CI_PROJECT_DIR}/apps/auth/Dockerfile"
+                --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}/auth:latest"
+build-users:
+    stage: build-users
+    image:
+        name: gcr.io/kaniko-project/executor:v1.9.0-debug
+        entrypoint:
+            -   ""
     script:
-        -   echo "Linting code..."
-        -   sleep 10
-        -   echo "Linting complete."
-
-# This job runs in the deploy stage.
-deploy-job:
-    # It only runs when *both* jobs in the test stage complete successfully.
+        -   mkdir -p /kaniko/.docker
+        -   echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+        -   /kaniko/executor
+                --context "${CI_PROJECT_DIR}/apps/users"
+                --dockerfile "${CI_PROJECT_DIR}/apps/users/Dockerfile"
+                --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}/users:latest"
+build-wallets:
+    stage: build-wallets
+    image:
+        name: gcr.io/kaniko-project/executor:v1.9.0-debug
+        entrypoint:
+            -   ""
+    script:
+        -   mkdir -p /kaniko/.docker
+        -   echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+        -   /kaniko/executor
+                --context "${CI_PROJECT_DIR}/apps/wallets"
+                --dockerfile "${CI_PROJECT_DIR}/apps/wallets/Dockerfile"
+                --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}/wallets:latest"
+deploy:
     stage: deploy
-    environment: production
+    image:
+        # use Kubernetes command-line tool image
+        name: bitnami/kubectl:latest
+        entrypoint:
+            -   ""
     script:
-        -   echo "Deploying application..."
-        -   echo "Application deployed."
+        # prepare
+        -   kubectl config get-contexts
+        -   kubectl config use-context alex-gudkov/kubernetes-microservices:primary-agent
+        # deleting deployments and ingress
+        -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/auth"
+        -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/users"
+        -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
+        -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yaml"
+        # update using services 
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/postgres"
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/redis"
+        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/rabbitmq"
+        # creating deployments and ingress
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/auth"
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/users"
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yaml"
+        # check status
+        -   kubectl get pods
+        -   kubectl get services
+        -   kubectl get ingress
