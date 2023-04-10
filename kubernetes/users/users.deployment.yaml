@@ -22,8 +22,7 @@ spec:
                     image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/users:latest
                     imagePullPolicy: Always
                     ports:
-                        -   name: port-users
-                            containerPort: 3002
+                        -   containerPort: 3002
                     env:
                         # application
                         -   name: APP_PORT
