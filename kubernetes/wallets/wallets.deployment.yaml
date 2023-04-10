@@ -22,8 +22,7 @@ spec:
                     image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/wallets:latest
                     imagePullPolicy: Always
                     ports:
-                        -   name: port-wallets
-                            containerPort: 3003
+                        -   containerPort: 3003
                     env:
                         # application
                         -   name: APP_PORT

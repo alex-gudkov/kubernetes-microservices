@@ -65,20 +65,20 @@ deploy:
         # prepare
         -   kubectl config get-contexts
         -   kubectl config use-context alex-gudkov/kubernetes-microservices:primary-agent
-        # delete pods
+        # deleting deployments and ingress
         -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/auth"
         -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/users"
         -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
+        -   kubectl delete --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yaml"
         # update using services 
         -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/postgres"
         -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/redis"
         -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/rabbitmq"
-        # create pods
+        # creating deployments and ingress
         -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/auth"
         -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/users"
         -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/wallets"
-        # update ingress-nginx ingress controller
-        -   kubectl apply --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yaml"
+        -   kubectl create --filename "${CI_PROJECT_DIR}/kubernetes/ingress-nginx.yaml"
         # check status
         -   kubectl get pods
         -   kubectl get services

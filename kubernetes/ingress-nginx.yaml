@@ -16,3 +16,10 @@ spec:
                                 name: users
                                 port:
                                     number: 3002
+                    -   path: /wallets
+                        pathType: Prefix
+                        backend:
+                            service:
+                                name: wallets
+                                port:
+                                    number: 3003
