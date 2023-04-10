@@ -8,26 +8,26 @@ import { WalletsService } from './wallets.service';
 @Controller('/wallets')
 @UseGuards(AuthGuard)
 export class WalletsHttpController {
-    constructor(private readonly walletsService: WalletsService) {}
+  constructor(private readonly walletsService: WalletsService) {}
 
-    @Post('/')
-    public createWallet(
-        @Body() createWalletDto: CreateWalletDto,
-        @CurrentUserIdDecorator() currentUserId: number,
-    ): Promise<WalletsEntity> {
-        return this.walletsService.createWallet(createWalletDto, currentUserId);
-    }
+  @Post('/')
+  public createWallet(
+    @Body() createWalletDto: CreateWalletDto,
+    @CurrentUserIdDecorator() currentUserId: number,
+  ): Promise<WalletsEntity> {
+    return this.walletsService.createWallet(createWalletDto, currentUserId);
+  }
 
-    @Get('/')
-    public findWallets(): Promise<WalletsEntity[]> {
-        return this.walletsService.findWallets();
-    }
+  @Get('/')
+  public findWallets(): Promise<WalletsEntity[]> {
+    return this.walletsService.findWallets();
+  }
 
-    @Patch('/:walletId/put-money')
-    public putMoneyOnWallet(
-        @Param('walletId', ParseIntPipe) walletId: number,
-        @Body() { moneyAmount },
-    ): Promise<WalletsEntity> {
-        return this.walletsService.putMoneyOnWallet(walletId, moneyAmount);
-    }
+  @Patch('/:walletId/put-money')
+  public putMoneyOnWallet(
+    @Param('walletId', ParseIntPipe) walletId: number,
+    @Body() { moneyAmount },
+  ): Promise<WalletsEntity> {
+    return this.walletsService.putMoneyOnWallet(walletId, moneyAmount);
+  }
 }
