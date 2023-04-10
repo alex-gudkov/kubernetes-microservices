@@ -2,8 +2,6 @@ import { AuthMiddleware, AuthUtilsModule } from '@libs/auth-utils';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { AppHttpController } from './app.http.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -15,8 +13,8 @@ import { AuthModule } from './auth/auth.module';
         AuthModule,
         AuthUtilsModule,
     ],
-    controllers: [AppHttpController],
-    providers: [AppService],
+    controllers: [],
+    providers: [],
     exports: [],
 })
 export class AppModule {
