@@ -11,7 +11,6 @@ spec:
         app.kubernetes.io/name: kubernetes-microservices
         app.kubernetes.io/component: users
     ports:
-        -   name: port-users
-            protocol: TCP
-            port: 80
-            targetPort: port-users
+        -   protocol: TCP
+            port: 3002
+            targetPort: 3002

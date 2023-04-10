@@ -26,13 +26,13 @@ spec:
                             containerPort: 6379
                     resources:
                         limits:
-                            memory: 512Mi
+                            memory: 2Gi
                             ephemeral-storage: 1Gi
-                            cpu: 250m
+                            cpu: 500m
                         requests:
-                            memory: 512Mi
+                            memory: 2Gi
                             ephemeral-storage: 1Gi
-                            cpu: 250m
+                            cpu: 500m
                     volumeMounts:
                       -     name: redis-data
                             mountPath: /data

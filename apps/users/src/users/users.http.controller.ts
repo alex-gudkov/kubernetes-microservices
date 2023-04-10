@@ -8,6 +8,13 @@ import { UsersService } from './users.service';
 export class UsersHttpController {
     constructor(private readonly usersService: UsersService) {}
 
+    @Get('/test')
+    public getTest(): { message: string } {
+        return {
+            message: 'Users microservice test!',
+        };
+    }
+
     @Get('/')
     @UseGuards(AuthGuard)
     public findAllUsers(): Promise<UsersEntity[]> | void {

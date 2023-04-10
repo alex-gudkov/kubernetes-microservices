@@ -19,11 +19,10 @@ spec:
         spec:
             containers:
                 -   name: wallets
-                    image: alexgudkov/kubernetes-microservices-wallets
-                    imagePullPolicy: IfNotPresent
+                    image: registry.gitlab.com/alex-gudkov/kubernetes-microservices/wallets:latest
+                    imagePullPolicy: Always
                     ports:
-                        -   name: port-wallets
-                            containerPort: 3003
+                        -   containerPort: 3003
                     env:
                         # application
                         -   name: APP_PORT
@@ -44,11 +43,13 @@ spec:
                             value: "kubernetes_microservices"
                     resources:
                         limits: 
-                            memory: 512Mi
+                            memory: 2Gi
                             ephemeral-storage: 1Gi
-                            cpu: 250m
+                            cpu: 500m
                         requests:
-                            memory: 512Mi
+                            memory: 2Gi
                             ephemeral-storage: 1Gi
-                            cpu: 250m
+                            cpu: 500m
+            imagePullSecrets:
+                -   name: regcred
             restartPolicy: Always

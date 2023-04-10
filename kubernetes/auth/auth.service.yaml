@@ -11,7 +11,8 @@ spec:
         app.kubernetes.io/name: kubernetes-microservices
         app.kubernetes.io/component: auth
     ports:
-        -   name: port-auth
-            protocol: TCP
-            port: 80
-            targetPort: port-auth
+        -   protocol: TCP
+            # port to be exposed
+            port: 3001
+            # port to containerPort from deployment specification
+            targetPort: 3001
