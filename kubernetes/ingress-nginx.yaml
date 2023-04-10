@@ -9,6 +9,16 @@ spec:
     rules:
         -   http:
                 paths:
+                    # matches all paths starting with '/auth'
+                    -   path: /auth
+                        pathType: Prefix
+                        backend:
+                            # service to access
+                            service:
+                                name: auth
+                                # port which service is exposing
+                                port:
+                                    number: 3001
                     -   path: /users
                         pathType: Prefix
                         backend:
