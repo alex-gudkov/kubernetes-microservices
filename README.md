@@ -2,6 +2,6 @@
 
 Microservices:
 
-* Auth microservice;
-* Users microservice;
-* Wallet microservice.
+* Auth microservice
+* Users microservice
+* Wallets microservice
